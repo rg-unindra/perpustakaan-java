@@ -13,12 +13,13 @@ import utils.SplashScreen;
  * @author Farhan Fadila
  */
 public class Library_app {
-
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
        JFrame splashScreen = new SplashScreen();
+     
        splashScreen.setVisible(true);
     }
     

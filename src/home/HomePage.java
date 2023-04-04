@@ -5,18 +5,19 @@
  */
 package home;
 
-import authentiocation.AuthenticationController;
-import authentiocation.FormLogin;
-import authentiocation.FormUser;
+import authentiocation.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import kategori.FormKategori;
+import rak.FormRak;
+import buku.FormBuku;
 
 /**
  *
  * @author Farhan Fadila
  */
 public class HomePage extends javax.swing.JFrame {
-    private final AuthenticationController authenticationController = new AuthenticationController();
+    final AuthenticationController authenticationController = new AuthenticationController();
     /**
      * Creates new form HomePage
      */
@@ -24,34 +25,23 @@ public class HomePage extends javax.swing.JFrame {
         initComponents();
     }
     
+    
     private void navigasi(String menu) {
-        JFrame frame;
+       JFrame frame;
+       
+        switch(menu) {
+            case "kategori":
+                frame = new FormKategori();
+            break;
+            case "buku":
+                frame = new FormBuku();
+            break;
+            default:
+                frame = new FormRak();
+        }
         
-//        switch(menu) {
-//            case "karyawan":
-//                frame = new FormKaryawan();
-//            break;
-//            case "keterlambatan":
-//                frame = new FormKeterlambatan();
-//            break;
-//            case "penggajian":
-//                frame = new FormPenggajian();
-//            break;
-//            case "lembur":
-//                frame = new FormLembur();
-//            break;
-//            case "user":
-//                frame = new FormUser();
-//            break;
-//            case "cuti":
-//                frame = new FormCuti();
-//            break;
-//            default:
-//                frame = new FormJabatan();
-//        }
-//        
-//       frame.setAlwaysOnTop(true);
-//       frame.setVisible(true);
+       frame.setAlwaysOnTop(true);
+       frame.setVisible(true);
     }
 
     /**
@@ -65,18 +55,13 @@ public class HomePage extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        ic_jabatan = new javax.swing.JLabel();
-        lbl_jabatan = new javax.swing.JLabel();
-        lbl_karyawan = new javax.swing.JLabel();
-        ic_karayawan = new javax.swing.JLabel();
-        lbl_terlambat = new javax.swing.JLabel();
-        ic_terlambat = new javax.swing.JLabel();
-        lbl_penggajian = new javax.swing.JLabel();
-        ic_penggajian = new javax.swing.JLabel();
-        ic_lembur = new javax.swing.JLabel();
-        lbl_lembur = new javax.swing.JLabel();
-        ic_user = new javax.swing.JLabel();
-        lbl_user = new javax.swing.JLabel();
+        ic_buku = new javax.swing.JLabel();
+        ic_siswa = new javax.swing.JLabel();
+        ic_rak = new javax.swing.JLabel();
+        ic_kategori = new javax.swing.JLabel();
+        ic_pinjam = new javax.swing.JLabel();
+        ic_pengembalian = new javax.swing.JLabel();
+        ic_buku3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,101 +78,66 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        ic_jabatan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_jabatan.png"))); // NOI18N
-        ic_jabatan.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        ic_jabatan.addMouseListener(new java.awt.event.MouseAdapter() {
+        ic_buku.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ic_buku.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_buku.png"))); // NOI18N
+        ic_buku.setText("Buku");
+        ic_buku.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_jabatanMousePressed(evt);
+                ic_bukuMousePressed(evt);
             }
         });
 
-        lbl_jabatan.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lbl_jabatan.setText("Katalog");
-        lbl_jabatan.addMouseListener(new java.awt.event.MouseAdapter() {
+        ic_siswa.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ic_siswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_siswa.png"))); // NOI18N
+        ic_siswa.setText("Siswa");
+        ic_siswa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                lbl_jabatanMousePressed(evt);
+                ic_siswaMousePressed(evt);
             }
         });
 
-        lbl_karyawan.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lbl_karyawan.setText("Siswa");
-        lbl_karyawan.addMouseListener(new java.awt.event.MouseAdapter() {
+        ic_rak.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ic_rak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_rak.png"))); // NOI18N
+        ic_rak.setText("Rak");
+        ic_rak.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                lbl_karyawanMousePressed(evt);
+                ic_rakMousePressed(evt);
             }
         });
 
-        ic_karayawan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ic_karayawan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_karyawan.png"))); // NOI18N
-        ic_karayawan.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        ic_karayawan.addMouseListener(new java.awt.event.MouseAdapter() {
+        ic_kategori.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ic_kategori.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_kategori.png"))); // NOI18N
+        ic_kategori.setText("Kategori");
+        ic_kategori.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_karayawanMousePressed(evt);
+                ic_kategoriMousePressed(evt);
             }
         });
 
-        lbl_terlambat.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lbl_terlambat.setText("Pengembalian");
-        lbl_terlambat.addMouseListener(new java.awt.event.MouseAdapter() {
+        ic_pinjam.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ic_pinjam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_pinjam.png"))); // NOI18N
+        ic_pinjam.setText("Pinjam");
+        ic_pinjam.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                lbl_terlambatMousePressed(evt);
+                ic_pinjamMousePressed(evt);
             }
         });
 
-        ic_terlambat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_terlamat.png"))); // NOI18N
-        ic_terlambat.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        ic_terlambat.addMouseListener(new java.awt.event.MouseAdapter() {
+        ic_pengembalian.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ic_pengembalian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_pengembalian.png"))); // NOI18N
+        ic_pengembalian.setText("Pengembalian");
+        ic_pengembalian.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_terlambatMousePressed(evt);
+                ic_pengembalianMousePressed(evt);
             }
         });
 
-        lbl_penggajian.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lbl_penggajian.setText("Buku");
-        lbl_penggajian.addMouseListener(new java.awt.event.MouseAdapter() {
+        ic_buku3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ic_buku3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_denda.png"))); // NOI18N
+        ic_buku3.setText("Denda");
+        ic_buku3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                lbl_penggajianMousePressed(evt);
-            }
-        });
-
-        ic_penggajian.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ic_penggajian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_penggajian.png"))); // NOI18N
-        ic_penggajian.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        ic_penggajian.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_penggajianMousePressed(evt);
-            }
-        });
-
-        ic_lembur.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_lembur.png"))); // NOI18N
-        ic_lembur.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        ic_lembur.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_lemburMousePressed(evt);
-            }
-        });
-
-        lbl_lembur.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lbl_lembur.setText("Peminjaman");
-        lbl_lembur.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lbl_lemburMousePressed(evt);
-            }
-        });
-
-        ic_user.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_admin.png"))); // NOI18N
-        ic_user.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        ic_user.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_userMousePressed(evt);
-            }
-        });
-
-        lbl_user.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lbl_user.setText("User");
-        lbl_user.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lbl_userMousePressed(evt);
+                ic_buku3MousePressed(evt);
             }
         });
 
@@ -195,69 +145,54 @@ public class HomePage extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lbl_karyawan)
-                    .addComponent(ic_karayawan)
-                    .addComponent(ic_lembur)
-                    .addComponent(lbl_lembur))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lbl_penggajian)
-                    .addComponent(ic_penggajian)
-                    .addComponent(lbl_terlambat)
-                    .addComponent(ic_terlambat)
-                    .addComponent(jLabel1))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(lbl_jabatan)
-                    .addComponent(ic_jabatan)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(lbl_user)
-                        .addComponent(ic_user)))
-                .addContainerGap(154, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(37, 37, 37))
+                .addGap(19, 19, 19))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(167, 167, 167)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ic_buku)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ic_kategori)
+                            .addComponent(ic_rak))))
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ic_pinjam)
+                    .addComponent(ic_pengembalian)
+                    .addComponent(ic_buku3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(ic_siswa)
+                .addGap(54, 54, 54))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(38, 38, 38)
                 .addComponent(jButton1)
-                .addGap(9, 9, 9)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel1)
-                .addGap(64, 64, 64)
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ic_buku)
+                    .addComponent(ic_pinjam)
+                    .addComponent(ic_siswa))
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ic_pengembalian)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(ic_karayawan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_karyawan))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ic_penggajian)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_penggajian))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ic_jabatan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_jabatan)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ic_lembur)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_lembur))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ic_terlambat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_terlambat))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ic_user)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_user)))
-                .addGap(206, 206, 206))
+                        .addComponent(ic_rak)
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ic_kategori)
+                            .addComponent(ic_buku3))))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         pack();
@@ -266,7 +201,7 @@ public class HomePage extends javax.swing.JFrame {
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         final boolean logout = authenticationController.logout();
-        
+
         if(logout) {
             JFrame login = new FormLogin();
             dispose();
@@ -274,56 +209,36 @@ public class HomePage extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Gagal Logout");
         }
-      
+
     }//GEN-LAST:event_jButton1MousePressed
 
-    private void ic_jabatanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_jabatanMousePressed
-       navigasi("jabatan");
-    }//GEN-LAST:event_ic_jabatanMousePressed
+    private void ic_bukuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_bukuMousePressed
+       navigasi("buku");
+    }//GEN-LAST:event_ic_bukuMousePressed
 
-    private void lbl_jabatanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_jabatanMousePressed
-       navigasi("jabatan");
-    }//GEN-LAST:event_lbl_jabatanMousePressed
+    private void ic_siswaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_siswaMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ic_siswaMousePressed
 
-    private void lbl_karyawanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_karyawanMousePressed
-       navigasi("karyawan");
-    }//GEN-LAST:event_lbl_karyawanMousePressed
+    private void ic_rakMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_rakMousePressed
+        navigasi("rak");
+    }//GEN-LAST:event_ic_rakMousePressed
 
-    private void ic_karayawanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_karayawanMousePressed
-       navigasi("karyawan");
-    }//GEN-LAST:event_ic_karayawanMousePressed
+    private void ic_kategoriMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_kategoriMousePressed
+        navigasi("kategori");
+    }//GEN-LAST:event_ic_kategoriMousePressed
 
-    private void ic_terlambatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_terlambatMousePressed
-      navigasi("keterlambatan");
-    }//GEN-LAST:event_ic_terlambatMousePressed
+    private void ic_pinjamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_pinjamMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ic_pinjamMousePressed
 
-    private void lbl_terlambatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_terlambatMousePressed
-       navigasi("keterlambatan");
-    }//GEN-LAST:event_lbl_terlambatMousePressed
+    private void ic_pengembalianMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_pengembalianMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ic_pengembalianMousePressed
 
-    private void ic_penggajianMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_penggajianMousePressed
-       navigasi("penggajian");
-    }//GEN-LAST:event_ic_penggajianMousePressed
-
-    private void lbl_penggajianMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_penggajianMousePressed
-       navigasi("penggajian");
-    }//GEN-LAST:event_lbl_penggajianMousePressed
-
-    private void ic_lemburMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_lemburMousePressed
-       navigasi("lembur");
-    }//GEN-LAST:event_ic_lemburMousePressed
-
-    private void lbl_lemburMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_lemburMousePressed
-       navigasi("lembur");
-    }//GEN-LAST:event_lbl_lemburMousePressed
-
-    private void ic_userMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_userMousePressed
-        navigasi("user");
-    }//GEN-LAST:event_ic_userMousePressed
-
-    private void lbl_userMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_userMousePressed
-       navigasi("user");
-    }//GEN-LAST:event_lbl_userMousePressed
+    private void ic_buku3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_buku3MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ic_buku3MousePressed
 
     /**
      * @param args the command line arguments
@@ -361,19 +276,14 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel ic_jabatan;
-    private javax.swing.JLabel ic_karayawan;
-    private javax.swing.JLabel ic_lembur;
-    private javax.swing.JLabel ic_penggajian;
-    private javax.swing.JLabel ic_terlambat;
-    private javax.swing.JLabel ic_user;
+    private javax.swing.JLabel ic_buku;
+    private javax.swing.JLabel ic_buku3;
+    private javax.swing.JLabel ic_kategori;
+    private javax.swing.JLabel ic_pengembalian;
+    private javax.swing.JLabel ic_pinjam;
+    private javax.swing.JLabel ic_rak;
+    private javax.swing.JLabel ic_siswa;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lbl_jabatan;
-    private javax.swing.JLabel lbl_karyawan;
-    private javax.swing.JLabel lbl_lembur;
-    private javax.swing.JLabel lbl_penggajian;
-    private javax.swing.JLabel lbl_terlambat;
-    private javax.swing.JLabel lbl_user;
     // End of variables declaration//GEN-END:variables
 }

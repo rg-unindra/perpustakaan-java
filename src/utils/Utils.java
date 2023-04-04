@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import javax.swing.*;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -119,5 +120,13 @@ public class Utils {
     public double formatDecimal(double value) {
        DecimalFormat df = new DecimalFormat("0.00");
        return Double.parseDouble(df.format(value));
+    }
+    
+    public int errorDialog(JFrame frame, String message) {
+      return  JOptionPane.showConfirmDialog(frame, message, "Error!", JOptionPane.YES_NO_OPTION);
+    }
+    
+    public void successDialog(JFrame frame, String message) {
+        JOptionPane.showMessageDialog(frame, message, "Success!", JOptionPane.INFORMATION_MESSAGE);
     }
 }
