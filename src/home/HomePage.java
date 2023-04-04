@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import kategori.FormKategori;
 import rak.FormRak;
 import buku.FormBuku;
+import siswa.FormSiswa;
 
 /**
  *
@@ -35,6 +36,8 @@ public class HomePage extends javax.swing.JFrame {
             break;
             case "buku":
                 frame = new FormBuku();
+            case "siswa":
+                frame = new FormSiswa();
             break;
             default:
                 frame = new FormRak();
@@ -217,7 +220,7 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_ic_bukuMousePressed
 
     private void ic_siswaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_siswaMousePressed
-        // TODO add your handling code here:
+       navigasi("siswa");
     }//GEN-LAST:event_ic_siswaMousePressed
 
     private void ic_rakMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_rakMousePressed

@@ -3,58 +3,63 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kategori;
+package siswa;
 
+
+import java.util.Calendar;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import rak.Rak;
 import utils.Utils;
 
 /**
  *
  * @author Farhan Fadila
  */
-public class FormKategori extends javax.swing.JFrame {
+public class FormSiswa extends javax.swing.JFrame {
     private DefaultTableModel model;
-    final KategoriController kategoriController = new KategoriController();
+    final SiswaController controller = new SiswaController();
     private final Utils utils = new Utils();
      
-    
-
     /**
      * Creates new form FormKategori
      */
-    public FormKategori() {
+    public FormSiswa() {
         initComponents();
         initColumnTabel();
         initRowTabel();
+        initComboBoxTahun();
         txt_id.setEditable(false);
     }
     
      private void initColumnTabel() {
         model = new DefaultTableModel ();
         
-        tbl_kategori.setModel(model);
+        tbl_siswa.setModel(model);
         model.addColumn("ID");
+        model.addColumn("NISN");
         model.addColumn("Nama");
-        model.addColumn("Keterangan");
+        model.addColumn("Telepon");
+        model.addColumn("Angkatan");
     }
         
     private void initRowTabel() {
        model.getDataVector().removeAllElements();
        model.fireTableDataChanged();
        try {
-            List<Kategori> rak = kategoriController.data();
+            List<Siswa> data = controller.data();
             
             
-            for(int i = 0; i < rak.size(); i++) {
-               Object[] obj = new Object[3];
-               Kategori item = rak.get(i);
+            for(int i = 0; i < data.size(); i++) {
+               Object[] obj = new Object[5];
+               Siswa item = data.get(i);
                obj[0] = item.id;
-               obj[1] = item.nama;
-               obj[2] = item.keterangan;
+               obj[1] = item.nisn;
+               obj[2] = item.nama_siswa;
+               obj[3] = item.telepon;
+               obj[4] = item.tahun_angkatan;
                model.addRow(obj); 
             } 
            
@@ -63,10 +68,32 @@ public class FormKategori extends javax.swing.JFrame {
        }
     }
     
+    
+    void initComboBoxTahun() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        Calendar now = Calendar.getInstance();
+        int currentYear = now.get(Calendar.YEAR);
+        
+        int[] years = new int[currentYear - 1949];
+        
+        for (int i = currentYear, j = 0; i >= 1950; i--, j++) {
+            years[j] = i;
+        }
+        
+      
+      
+        
+        for (int i = 0; i < years.length; i++) {
+            model.addElement(Integer.toString(years[i]));
+        }
+        cmb_tahun.setModel(model);
+    }
+    
     private void resetForm() {
         txt_id.setText("");
+        txt_nisn.setText("");
         txt_nama.setText("");
-        txt_keterangan.setText("");
+        txt_telepon.setText("");
     }
 
     /**
@@ -81,33 +108,30 @@ public class FormKategori extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_id = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txt_nama = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
+        txt_nisn = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txt_keterangan = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbl_kategori = new javax.swing.JTable();
+        tbl_siswa = new javax.swing.JTable();
         btn_simpan = new javax.swing.JButton();
         btn_hapus = new javax.swing.JButton();
         btn_laporan = new javax.swing.JButton();
+        txt_nama = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txt_telepon = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        cmb_tahun = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("Form Kategori");
+        jLabel3.setText("Form Siswa");
 
         jLabel4.setText("ID");
 
-        jLabel11.setText("Katerangan");
+        jLabel5.setText("NISN");
 
-        jLabel5.setText("Nama");
-
-        txt_keterangan.setColumns(20);
-        txt_keterangan.setRows(5);
-        jScrollPane1.setViewportView(txt_keterangan);
-
-        tbl_kategori.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_siswa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -118,12 +142,12 @@ public class FormKategori extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tbl_kategori.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_siswa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbl_kategoriMouseClicked(evt);
+                tbl_siswaMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tbl_kategori);
+        jScrollPane2.setViewportView(tbl_siswa);
 
         btn_simpan.setText("Simpan");
         btn_simpan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -151,33 +175,47 @@ public class FormKategori extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Nama");
+
+        jLabel7.setText("Telepon");
+
+        jLabel8.setText("Tahun");
+
+        cmb_tahun.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(68, 68, 68)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_nisn, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                            .addComponent(txt_id)
+                            .addComponent(txt_nama, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txt_telepon, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmb_tahun, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel11))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txt_nama)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
-                                .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(122, Short.MAX_VALUE))
+                        .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,20 +228,27 @@ public class FormKategori extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(txt_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nisn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_telepon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmb_tahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51)
+                .addGap(53, 53, 53)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(119, 119, 119))
+                .addGap(117, 117, 117))
         );
 
         pack();
@@ -215,16 +260,24 @@ public class FormKategori extends javax.swing.JFrame {
             String idString = txt_id.getText();
             boolean isCreate = idString.isEmpty();
 
+            String nisn = txt_nisn.getText();
             String nama = txt_nama.getText();
-            String keterangan = txt_keterangan.getText();
+            String telepon = txt_telepon.getText();
+            int tahun = Integer.parseInt(cmb_tahun.getSelectedItem().toString());
 
-            if(nama.isEmpty()) {
+            if(nisn.isEmpty()) {
                 utils.errorDialog(this, "Nama harus di isi");
 
                 return;
             }
 
-            if(keterangan.isEmpty()) {
+            if(nama.isEmpty()) {
+                utils.errorDialog(this, "Keterangan harus di isi");
+
+                return;
+            }
+            
+            if(telepon.isEmpty()) {
                 utils.errorDialog(this, "Keterangan harus di isi");
 
                 return;
@@ -233,9 +286,9 @@ public class FormKategori extends javax.swing.JFrame {
             boolean berhasil = false;
 
             if(isCreate) {
-                berhasil = kategoriController.tambah(nama, keterangan);
+                berhasil = controller.tambah(nisn, nama, telepon, tahun);
             } else {
-                berhasil = kategoriController.edit(Integer.parseInt(idString) , nama, keterangan);
+                berhasil = controller.edit(Integer.parseInt(idString), nisn, nama, telepon, tahun);
             }
 
             if(!berhasil) {
@@ -255,12 +308,12 @@ public class FormKategori extends javax.swing.JFrame {
         try {
             int id = Integer.parseInt(txt_id.getText());
 
-            Kategori kategori = kategoriController.detail(id);
+            Siswa item = controller.detail(id);
 
-            int dialogResult = utils.errorDialog(this, "Kamu yakin ingin menghapus data " + kategori.nama + "?");
+            int dialogResult = utils.errorDialog(this, "Kamu yakin ingin menghapus data " + item.nama_siswa + "?");
 
             if(dialogResult == JOptionPane.YES_OPTION) {
-                kategoriController.hapus(id);
+                controller.hapus(id);
                 resetForm();
                 initRowTabel();
             }
@@ -275,19 +328,21 @@ public class FormKategori extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_laporanActionPerformed
 
-    private void tbl_kategoriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_kategoriMouseClicked
+    private void tbl_siswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_siswaMouseClicked
        try {
-            int index =  tbl_kategori.getSelectedRow();
-            TableModel mdl = tbl_kategori.getModel();
+            int index =  tbl_siswa.getSelectedRow();
+            TableModel mdl = tbl_siswa.getModel();
             int id = Integer.parseInt(mdl.getValueAt(index, 0).toString());
-            Kategori kategori = kategoriController.detail(id);
+            Siswa item = controller.detail(id);
             
             
             txt_id.setText(String.valueOf(id));
-            txt_nama.setText(kategori.nama);
-            txt_keterangan.setText(kategori.keterangan);
+            txt_nisn.setText(item.nisn);
+            txt_nama.setText(item.nama_siswa);
+            txt_telepon.setText(item.telepon);
+            cmb_tahun.setSelectedItem(String.valueOf(item.tahun_angkatan));
         } catch(Exception ex) {}
-    }//GEN-LAST:event_tbl_kategoriMouseClicked
+    }//GEN-LAST:event_tbl_siswaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -306,20 +361,21 @@ public class FormKategori extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormKategori().setVisible(true);
+                new FormSiswa().setVisible(true);
             }
         });
     }
@@ -328,15 +384,18 @@ public class FormKategori extends javax.swing.JFrame {
     private javax.swing.JButton btn_hapus;
     private javax.swing.JButton btn_laporan;
     private javax.swing.JButton btn_simpan;
-    private javax.swing.JLabel jLabel11;
+    private javax.swing.JComboBox<String> cmb_tahun;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tbl_kategori;
+    private javax.swing.JTable tbl_siswa;
     private javax.swing.JTextField txt_id;
-    private javax.swing.JTextArea txt_keterangan;
     private javax.swing.JTextField txt_nama;
+    private javax.swing.JTextField txt_nisn;
+    private javax.swing.JTextField txt_telepon;
     // End of variables declaration//GEN-END:variables
 }

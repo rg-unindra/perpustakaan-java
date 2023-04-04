@@ -83,14 +83,13 @@ public class SiswaController extends Koneksi {
     }
     
     
-     public Siswa detail(String id) {
+     public Siswa detail(int id) {
          
         ResultSet result = executeQuery("SELECT * FROM `siswa` WHERE id_siswa = " + id + "");
         
         try {
             if(result.next()) {
-               return new Siswa(result.getInt(1), result.getString(2), result.getString(3), result.getString(3), result.getInt(3));
-           
+               return new Siswa(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getInt(5));
             }
         } catch (SQLException ex) {
            Logger.getLogger(SiswaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,7 +98,7 @@ public class SiswaController extends Koneksi {
     }
     
      
-     public boolean hapus(String id) {
+     public boolean hapus(int id) {
         try {
             executeQuery2("DELETE FROM `siswa` WHERE `id_siswa` = " + id);
             return true;
