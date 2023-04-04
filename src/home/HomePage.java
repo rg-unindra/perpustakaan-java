@@ -36,6 +36,7 @@ public class HomePage extends javax.swing.JFrame {
             break;
             case "buku":
                 frame = new FormBuku();
+            break;
             case "siswa":
                 frame = new FormSiswa();
             break;

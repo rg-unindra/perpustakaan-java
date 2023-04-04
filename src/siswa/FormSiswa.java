@@ -80,9 +80,6 @@ public class FormSiswa extends javax.swing.JFrame {
             years[j] = i;
         }
         
-      
-      
-        
         for (int i = 0; i < years.length; i++) {
             model.addElement(Integer.toString(years[i]));
         }

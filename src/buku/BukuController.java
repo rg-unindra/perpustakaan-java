@@ -57,7 +57,7 @@ public class BukuController extends Koneksi {
     ) {
         try {
             Object[] object = { id_kategori, id_rak , judul, keterangan, isbn, penerbit, pengarang, tahun, halaman, jumlah, tanggal_masuk};
-            executeQuery2("INSERT INTO `buku` (id_kategori, id_rak, judul, keterangan, isbn, penerbit, pengarang, tahun, halaman, jumlah, tanggal_masuk    ) VALUES " + objectToString(object));
+            executeQuery2("INSERT INTO `buku` (id_kategori, id_rak, judul, keterangan, isbn, penerbit, pengarang, tahun, halaman, jumlah, tanggal_masuk) VALUES " + objectToString(object));
             return true;
         } catch (Exception ex) {
             System.out.println("Tambah Buku Exception => " + ex);
@@ -102,9 +102,9 @@ public class BukuController extends Koneksi {
         }
     }
 
-    public Buku detail(String id) {
+    public Buku detail(int id) {
 
-        ResultSet result = executeQuery("SELECT * FROM `buku` WHERE id_buku = '" + id + "'");
+        ResultSet result = executeQuery("SELECT * FROM `buku` WHERE id_buku = " + id);
 
         try {
             if (result.next()) {
@@ -119,9 +119,9 @@ public class BukuController extends Koneksi {
         return null;
     }
 
-    public boolean hapus(String id) {
+    public boolean hapus(int id) {
         try {
-            executeQuery2("DELETE FROM `buku` WHERE `id_buku` = '" + id + "'");
+            executeQuery2("DELETE FROM `buku` WHERE `id_buku` = " + id);
             return true;
         } catch (Exception ex) {
             return false;
