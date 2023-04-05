@@ -127,4 +127,22 @@ public class BukuController extends Koneksi {
             return false;
         }
     }
-}
+    
+    public List<Buku> search(String query) {
+       List<Buku> temp = new ArrayList<>();
+
+        ResultSet result = executeQuery("SELECT * FROM `buku` WHERE CONCAT(id_buku, judul, keterangan, isbn, penerbit, pengarang, tahun, halaman, jumlah, tanggal_masuk) LIKE '%" + query + "%' ORDER BY `judul` ASC");
+
+        try {
+            while (result.next()) {
+                temp.add(new Buku(result.getInt(1), result.getInt(2), result.getInt(3), result.getString(4),
+                        result.getString(5), result.getString(6), result.getString(7), result.getString(8),
+                        result.getInt(9), result.getInt(10), result.getInt(11), result.getLong(12)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BukuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return temp;
+    }
+} 

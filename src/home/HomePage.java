@@ -12,6 +12,7 @@ import kategori.FormKategori;
 import rak.FormRak;
 import buku.FormBuku;
 import siswa.FormSiswa;
+import transaction.FormPeminjaman;
 
 /**
  *
@@ -33,13 +34,16 @@ public class HomePage extends javax.swing.JFrame {
         switch(menu) {
             case "kategori":
                 frame = new FormKategori();
-            break;
+                break;
             case "buku":
                 frame = new FormBuku();
-            break;
+                break;
             case "siswa":
                 frame = new FormSiswa();
-            break;
+                break;
+            case "peminjaman":
+                frame = new FormPeminjaman();
+                break;
             default:
                 frame = new FormRak();
         }
@@ -64,8 +68,6 @@ public class HomePage extends javax.swing.JFrame {
         ic_rak = new javax.swing.JLabel();
         ic_kategori = new javax.swing.JLabel();
         ic_pinjam = new javax.swing.JLabel();
-        ic_pengembalian = new javax.swing.JLabel();
-        ic_buku3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,76 +129,53 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        ic_pengembalian.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        ic_pengembalian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_pengembalian.png"))); // NOI18N
-        ic_pengembalian.setText("Pengembalian");
-        ic_pengembalian.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_pengembalianMousePressed(evt);
-            }
-        });
-
-        ic_buku3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        ic_buku3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_denda.png"))); // NOI18N
-        ic_buku3.setText("Denda");
-        ic_buku3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_buku3MousePressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(19, 19, 19))
+                .addGap(88, 88, 88)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ic_buku)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(ic_rak)))
+                        .addGap(77, 77, 77)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ic_pinjam)
+                                .addGap(56, 56, 56)
+                                .addComponent(ic_siswa))
+                            .addComponent(ic_kategori))
+                        .addGap(0, 46, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addGap(61, 61, 61))
             .addGroup(layout.createSequentialGroup()
-                .addGap(167, 167, 167)
+                .addGap(220, 220, 220)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ic_buku)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ic_kategori)
-                            .addComponent(ic_rak))))
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ic_pinjam)
-                    .addComponent(ic_pengembalian)
-                    .addComponent(ic_buku3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(ic_siswa)
-                .addGap(54, 54, 54))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jButton1)
-                .addGap(30, 30, 30)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel1)
-                .addGap(52, 52, 52)
+                .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ic_buku)
                     .addComponent(ic_pinjam)
                     .addComponent(ic_siswa))
                 .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ic_pengembalian)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ic_rak)
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ic_kategori)
-                            .addComponent(ic_buku3))))
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(ic_kategori)
+                    .addComponent(ic_rak))
+                .addContainerGap(176, Short.MAX_VALUE))
         );
 
         pack();
@@ -233,16 +212,8 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_ic_kategoriMousePressed
 
     private void ic_pinjamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_pinjamMousePressed
-        // TODO add your handling code here:
+       navigasi("peminjaman");
     }//GEN-LAST:event_ic_pinjamMousePressed
-
-    private void ic_pengembalianMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_pengembalianMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ic_pengembalianMousePressed
-
-    private void ic_buku3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_buku3MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ic_buku3MousePressed
 
     /**
      * @param args the command line arguments
@@ -281,9 +252,7 @@ public class HomePage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ic_buku;
-    private javax.swing.JLabel ic_buku3;
     private javax.swing.JLabel ic_kategori;
-    private javax.swing.JLabel ic_pengembalian;
     private javax.swing.JLabel ic_pinjam;
     private javax.swing.JLabel ic_rak;
     private javax.swing.JLabel ic_siswa;

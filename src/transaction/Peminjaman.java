@@ -19,6 +19,7 @@ public class Peminjaman {
     public long tanggal_pinjam;
     public long tanggal_kembali;
     public long denda;
+    public int max_hari;
 
     public Peminjaman(
             int id_peminjaman, 
@@ -29,7 +30,8 @@ public class Peminjaman {
             String status, 
             long tanggal_pinjam, 
             long tanggal_kembali, 
-            long denda
+            long denda,
+            int max_hari
     ) {
         this.id_peminjaman = id_peminjaman;
         this.id_buku = id_buku;
@@ -40,6 +42,7 @@ public class Peminjaman {
         this.tanggal_pinjam = tanggal_pinjam;
         this.tanggal_kembali = tanggal_kembali;
         this.denda = denda;
+        this.max_hari = max_hari;
     }
 
     @Override
@@ -54,6 +57,7 @@ public class Peminjaman {
                 ", tanggal_pinjam=" + tanggal_pinjam +
                 ", tanggal_kembali=" + tanggal_kembali +
                 ", denda=" + denda +
+                ", max_hari=" + max_hari +
                 '}';
     }
 }

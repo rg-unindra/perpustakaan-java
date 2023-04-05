@@ -96,6 +96,22 @@ public class SiswaController extends Koneksi {
         }
         return null;
     }
+     
+    public List<Siswa> search(String query) {
+       List<Siswa> temp = new ArrayList<>();
+
+        ResultSet result = executeQuery("SELECT * FROM `siswa` WHERE CONCAT(id_siswa, nisn, nama_siswa, telepon) LIKE '%" + query + "%' ORDER BY `judul` ASC");
+
+        try {
+            while (result.next()) {
+                 temp.add(new Siswa(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getInt(5)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SiswaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return temp;
+    }
     
      
      public boolean hapus(int id) {

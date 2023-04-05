@@ -9,14 +9,12 @@ import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import javax.swing.*;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRParameter;
@@ -128,5 +126,60 @@ public class Utils {
     
     public void successDialog(JFrame frame, String message) {
         JOptionPane.showMessageDialog(frame, message, "Success!", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public String statusToText(String status) {
+        switch(status) {
+            case "SP":
+               return "Dipinjam";
+            default:
+                return "Dikembalikan";   
+        }
+    }
+    
+    public String textToStatus(String text) {
+        switch(text) {
+            case "Dipinjam":
+               return "SP";
+            default:
+                return "TDK";   
+        }
+    }
+    
+    public long denda(long tanggalPinjamInEpoch, int maxPinjam) {
+        if(tanggalPinjamInEpoch == 0) {
+            return 0;
+        }
+        
+        final long now = epochTimeNow();
+        
+        final Instant pinjamInstant = Instant.ofEpochMilli(tanggalPinjamInEpoch);
+        final Instant nowInstant = Instant.ofEpochMilli(now);
+ 
+        
+        final Duration duration = Duration.between(pinjamInstant, nowInstant);
+        
+        long days = duration.toDays();
+        
+        if(days <= maxPinjam) {
+           return 0;
+        }
+        
+        long maxLong = maxPinjam;
+        
+        
+        return (days - maxLong) * 2000;
+    }
+    
+    public int indexOf(Map<Integer, Integer> map, int id) {
+        int index = 0;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+          if (entry.getValue().equals(id)) {
+            index = entry.getKey();
+            return index;
+          }
+        }
+        
+        return index;
     }
 }

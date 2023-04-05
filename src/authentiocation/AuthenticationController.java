@@ -78,6 +78,10 @@ public final class AuthenticationController extends Koneksi {
        return user != null;
     }
     
+    public User currentSession () {
+       return user;
+    }
+    
     public void checkCurrentSession() {
         try {
             ResultSet currentSession = executeQuery("SELECT * FROM `session`");
