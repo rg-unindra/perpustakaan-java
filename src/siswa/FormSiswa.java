@@ -166,6 +166,11 @@ public class FormSiswa extends javax.swing.JFrame {
         });
 
         btn_laporan.setText("Laporan");
+        btn_laporan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_laporanMousePressed(evt);
+            }
+        });
         btn_laporan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_laporanActionPerformed(evt);
@@ -340,6 +345,10 @@ public class FormSiswa extends javax.swing.JFrame {
             cmb_tahun.setSelectedItem(String.valueOf(item.tahun_angkatan));
         } catch(Exception ex) {}
     }//GEN-LAST:event_tbl_siswaMouseClicked
+
+    private void btn_laporanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMousePressed
+       utils.bukaLaporan("laporan_siswa", controller.con);
+    }//GEN-LAST:event_btn_laporanMousePressed
 
     /**
      * @param args the command line arguments

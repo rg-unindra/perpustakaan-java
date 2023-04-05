@@ -30,7 +30,7 @@
                   <Component id="jButton1" alignment="2" min="-2" pref="102" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="2" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="169" max="32767" attributes="0"/>
+              <EmptySpace pref="156" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -69,7 +69,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Selamat Datang di Aplikasi Penggajian"/>
+        <Property name="text" type="java.lang.String" value="Selamat Datang di Aplikasi Perpustakaan"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -238,6 +238,11 @@ public class FormPeminjaman extends javax.swing.JFrame {
         });
 
         btn_laporan.setText("Laporan");
+        btn_laporan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_laporanMousePressed(evt);
+            }
+        });
         btn_laporan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_laporanActionPerformed(evt);
@@ -518,6 +523,10 @@ public class FormPeminjaman extends javax.swing.JFrame {
     private void btn_resetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_resetMousePressed
         resetForm();
     }//GEN-LAST:event_btn_resetMousePressed
+
+    private void btn_laporanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMousePressed
+       utils.bukaLaporan("laporan_peminjaman", peminjamanController.con);
+    }//GEN-LAST:event_btn_laporanMousePressed
 
     /**
      * @param args the command line arguments
