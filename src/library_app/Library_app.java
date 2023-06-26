@@ -5,22 +5,34 @@
  */
 package library_app;
 
+import authentiocation.AuthenticationController;
+import authentiocation.FormLogin;
+import home.HomePage;
 import javax.swing.JFrame;
-import utils.SplashScreen;
 
 /**
  *
  * @author Farhan Fadila
  */
 public class Library_app {
-    
+     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       JFrame splashScreen = new SplashScreen();
+      final AuthenticationController authenticationController = new AuthenticationController() ;
      
-       splashScreen.setVisible(true);
+      boolean login = authenticationController.isLoggedIn();
+        
+        JFrame nextPage;
+        if(login) {
+            nextPage = new HomePage();
+        } else {
+            nextPage = new FormLogin();
+        }
+        
+       
+       nextPage.setAlwaysOnTop(true);
+       nextPage.setVisible(true);
     }
-    
 }

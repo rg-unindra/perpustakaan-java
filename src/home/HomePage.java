@@ -13,6 +13,7 @@ import rak.FormRak;
 import buku.FormBuku;
 import siswa.FormSiswa;
 import transaction.FormPeminjaman;
+import transaction.FormPinjam;
 
 /**
  *
@@ -44,6 +45,9 @@ public class HomePage extends javax.swing.JFrame {
             case "peminjaman":
                 frame = new FormPeminjaman();
                 break;
+            case "pinjam":
+                frame = new FormPinjam();
+                break;
             default:
                 frame = new FormRak();
         }
@@ -51,6 +55,8 @@ public class HomePage extends javax.swing.JFrame {
        frame.setAlwaysOnTop(true);
        frame.setVisible(true);
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,28 +67,24 @@ public class HomePage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        parent = new javax.swing.JPanel();
         ic_buku = new javax.swing.JLabel();
-        ic_siswa = new javax.swing.JLabel();
+        ic_pinjam = new javax.swing.JLabel();
         ic_rak = new javax.swing.JLabel();
         ic_kategori = new javax.swing.JLabel();
-        ic_pinjam = new javax.swing.JLabel();
+        ic_siswa = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1024, 768));
+        setResizable(false);
+        setSize(new java.awt.Dimension(1024, 768));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Aplikasi Perpustakaan");
-
-        jButton1.setBackground(new java.awt.Color(255, 51, 51));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Logout");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton1MousePressed(evt);
-            }
-        });
+        parent.setBackground(new java.awt.Color(255, 255, 255));
+        parent.setMinimumSize(new java.awt.Dimension(1024, 768));
+        parent.setPreferredSize(new java.awt.Dimension(1024, 768));
 
         ic_buku.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ic_buku.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_buku.png"))); // NOI18N
@@ -93,12 +95,12 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        ic_siswa.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        ic_siswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_siswa.png"))); // NOI18N
-        ic_siswa.setText("Siswa");
-        ic_siswa.addMouseListener(new java.awt.event.MouseAdapter() {
+        ic_pinjam.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ic_pinjam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_pinjam.png"))); // NOI18N
+        ic_pinjam.setText("Pinjam");
+        ic_pinjam.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_siswaMousePressed(evt);
+                ic_pinjamMousePressed(evt);
             }
         });
 
@@ -120,63 +122,109 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
-        ic_pinjam.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        ic_pinjam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_pinjam.png"))); // NOI18N
-        ic_pinjam.setText("Pinjam");
-        ic_pinjam.addMouseListener(new java.awt.event.MouseAdapter() {
+        ic_siswa.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ic_siswa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_siswa.png"))); // NOI18N
+        ic_siswa.setText("Siswa");
+        ic_siswa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_pinjamMousePressed(evt);
+                ic_siswaMousePressed(evt);
             }
         });
+
+        jPanel1.setBackground(new java.awt.Color(255, 204, 51));
+        jPanel1.setMaximumSize(new java.awt.Dimension(900, 900));
+
+        jButton1.setBackground(new java.awt.Color(255, 51, 51));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Logout");
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusPainted(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setRequestFocusEnabled(false);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton1MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(30, 30, 30))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Menu Aplikasi Perpustakaan");
+
+        javax.swing.GroupLayout parentLayout = new javax.swing.GroupLayout(parent);
+        parent.setLayout(parentLayout);
+        parentLayout.setHorizontalGroup(
+            parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(parentLayout.createSequentialGroup()
+                .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(parentLayout.createSequentialGroup()
+                        .addGap(397, 397, 397)
+                        .addComponent(jLabel1))
+                    .addGroup(parentLayout.createSequentialGroup()
+                        .addGap(253, 253, 253)
+                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ic_siswa)
+                            .addComponent(ic_pinjam))
+                        .addGap(60, 60, 60)
+                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ic_buku)
+                            .addComponent(ic_rak))
+                        .addGap(60, 60, 60)
+                        .addComponent(ic_kategori)))
+                .addContainerGap(284, Short.MAX_VALUE))
+        );
+        parentLayout.setVerticalGroup(
+            parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(parentLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(78, 78, 78)
+                .addComponent(jLabel1)
+                .addGap(77, 77, 77)
+                .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(parentLayout.createSequentialGroup()
+                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ic_pinjam)
+                            .addComponent(ic_buku))
+                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(parentLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(ic_siswa))
+                            .addGroup(parentLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(ic_rak))))
+                    .addGroup(parentLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(ic_kategori)))
+                .addContainerGap(301, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ic_buku)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addComponent(ic_rak)))
-                                .addGap(77, 77, 77)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(ic_pinjam)
-                                        .addGap(56, 56, 56)
-                                        .addComponent(ic_siswa))
-                                    .addComponent(ic_kategori)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(163, 163, 163)))
-                        .addGap(0, 46, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addGap(61, 61, 61))
+            .addComponent(parent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jButton1)
-                .addGap(28, 28, 28)
-                .addComponent(jLabel1)
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ic_buku)
-                    .addComponent(ic_pinjam)
-                    .addComponent(ic_siswa))
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(ic_kategori)
-                    .addComponent(ic_rak))
-                .addContainerGap(176, Short.MAX_VALUE))
+            .addComponent(parent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -193,28 +241,27 @@ public class HomePage extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Gagal Logout");
         }
-
     }//GEN-LAST:event_jButton1MousePressed
 
-    private void ic_bukuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_bukuMousePressed
-       navigasi("buku");
-    }//GEN-LAST:event_ic_bukuMousePressed
-
     private void ic_siswaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_siswaMousePressed
-       navigasi("siswa");
+        navigasi("siswa");
     }//GEN-LAST:event_ic_siswaMousePressed
-
-    private void ic_rakMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_rakMousePressed
-        navigasi("rak");
-    }//GEN-LAST:event_ic_rakMousePressed
 
     private void ic_kategoriMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_kategoriMousePressed
         navigasi("kategori");
     }//GEN-LAST:event_ic_kategoriMousePressed
 
+    private void ic_rakMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_rakMousePressed
+        navigasi("rak");
+    }//GEN-LAST:event_ic_rakMousePressed
+
     private void ic_pinjamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_pinjamMousePressed
-       navigasi("peminjaman");
+        navigasi("pinjam");
     }//GEN-LAST:event_ic_pinjamMousePressed
+
+    private void ic_bukuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_bukuMousePressed
+        navigasi("buku");
+    }//GEN-LAST:event_ic_bukuMousePressed
 
     /**
      * @param args the command line arguments
@@ -259,5 +306,7 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLabel ic_siswa;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel parent;
     // End of variables declaration//GEN-END:variables
 }
