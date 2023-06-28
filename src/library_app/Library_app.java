@@ -32,7 +32,6 @@ public class Library_app {
         }
         
        
-       nextPage.setAlwaysOnTop(true);
        nextPage.setVisible(true);
     }
 }

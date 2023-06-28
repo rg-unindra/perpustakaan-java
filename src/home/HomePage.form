@@ -62,20 +62,18 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="ic_siswa" min="-2" max="-2" attributes="0"/>
-                              <Component id="ic_pinjam" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="ic_pinjam" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="ic_buku" min="-2" max="-2" attributes="0"/>
-                              <Component id="ic_rak" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                          <Component id="ic_kategori" min="-2" max="-2" attributes="0"/>
+                          <Component id="ic_buku" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="ic_siswa" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
+                          <Component id="ic_pengembalian" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="284" max="32767" attributes="0"/>
+                  <EmptySpace pref="310" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -86,24 +84,14 @@
                   <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="ic_pinjam" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="ic_buku" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="50" pref="50" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="ic_siswa" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="ic_rak" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                          <Component id="ic_kategori" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="ic_pinjam" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ic_buku" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ic_siswa" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="301" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                  <Component id="ic_pengembalian" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="306" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -135,34 +123,6 @@
           </Properties>
           <Events>
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ic_pinjamMousePressed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="ic_rak">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="11" style="1"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/assets/ic_rak.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Rak"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ic_rakMousePressed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="ic_kategori">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="11" style="1"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/assets/ic_kategori.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Kategori"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ic_kategoriMousePressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="ic_siswa">
@@ -240,6 +200,20 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Menu Aplikasi Perpustakaan"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="ic_pengembalian">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="11" style="1"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/assets/ic_pinjam.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Pengembalian"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ic_pengembalianMousePressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

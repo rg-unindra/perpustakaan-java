@@ -98,6 +98,21 @@ public  class Koneksi {
         }
         return query;
     }
+    
+    
+    
+    public boolean isIDExist(String table, String field, String id)   {
+        try {
+           ResultSet result =   executeQuery("SELECT COUNT('" + field + "') FROM `" + table + "` WHERE " + field + " = '" + id + "'");
+            
+           if(result.next()) {
+               return result.getInt(1) > 0;
+           }
+            return false;
+        } catch(Exception ex) {
+            return false;
+        }
+    }
 }
 
 

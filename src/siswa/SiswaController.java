@@ -32,7 +32,7 @@ public class SiswaController extends Koneksi {
 
         try {
             while(result.next()) {
-               temp.add(new Siswa(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getInt(5)));
+               temp.add(siswa(result));
             }
         } catch (SQLException ex) {
            Logger.getLogger(SiswaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -43,53 +43,56 @@ public class SiswaController extends Koneksi {
     
     public boolean tambah(
         String nisn,
-        String nama_siswa,
-        String telepon,
-        int tahun_angkatan
+        String namaSiswa,
+        String kelas,
+        String alamat,
+        String telepon
     ) {
         try {
-          Object[] object = {nisn, nama_siswa, telepon, tahun_angkatan};
-          executeQuery2("INSERT INTO `siswa` (nisn, nama_siswa, telepon, tahun_angkatan) VALUES " + objectToString(object));
+          Object[] object = {nisn, namaSiswa, kelas, alamat, telepon};
+          executeQuery2("INSERT INTO `siswa` (nisn, nama_siswa, kelas, alamat, telepon) VALUES " + objectToString(object));
           return true;
         } catch(Exception ex) {
-            System.out.println("Tambah Siswa Exception => " + ex);
+            System.out.println("Tambah Exception => " + ex);
             return false;
         }
     }
     
     
     public boolean edit( 
-        int id,
         String nisn,
-        String nama_siswa,
-        String telepon,
-        int tahun_angkatan
+        String namaSiswa,
+        String kelas,
+        String alamat,
+        String telepon
     ) {
         try {
         String updateQuery = "UPDATE siswa SET " +
-        "nisn = '" + nisn + "', " +
-        "nama_siswa = '" + nama_siswa + "', " +
-        "telepon = '" + telepon + "', " +
-        "tahun_angkatan = " + tahun_angkatan + " " +
-        "WHERE id_siswa = " + id;
+                            "nama_siswa = '" + namaSiswa + "', " +
+                            "kelas = '" + kelas + "', " +
+                            "alamat = '" + alamat + "', " +
+                            "telepon = '" + telepon + "' " +
+                            "WHERE nisn = '" + nisn + "'";
 
         executeQuery2(updateQuery);
         
           return true;
         } catch(Exception ex) {
-            System.out.println("Edit Siswa Exception => " + ex);
+            System.out.println("Edit Exception => " + ex);
             return false;
         }
     }
     
     
-     public Siswa detail(int id) {
+     public Siswa detail(
+        String nisn
+     ) {
          
-        ResultSet result = executeQuery("SELECT * FROM `siswa` WHERE id_siswa = " + id + "");
+        ResultSet result = executeQuery("SELECT * FROM `siswa` WHERE nisn = '" + nisn + "'");
         
         try {
             if(result.next()) {
-               return new Siswa(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getInt(5));
+               return siswa(result);
             }
         } catch (SQLException ex) {
            Logger.getLogger(SiswaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,7 +107,7 @@ public class SiswaController extends Koneksi {
 
         try {
             while (result.next()) {
-                 temp.add(new Siswa(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getInt(5)));
+                 temp.add(siswa(result));
             }
         } catch (SQLException ex) {
             Logger.getLogger(SiswaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -114,12 +117,24 @@ public class SiswaController extends Koneksi {
     }
     
      
-     public boolean hapus(int id) {
+     public boolean hapus(String nisn) {
         try {
-            executeQuery2("DELETE FROM `siswa` WHERE `id_siswa` = " + id);
+            executeQuery2("DELETE FROM `siswa` WHERE `nisn` = " + nisn);
             return true;
         } catch(Exception ex) {
             return false;
         }
+    }
+     
+     
+    private Siswa siswa(ResultSet result) {
+       try {
+            return new Siswa(result.getString(1), result.getString(2), result.getString(3),
+                            result.getString(4), result.getString(5));
+       } catch(SQLException ex) {
+          ex.printStackTrace();
+       }
+       
+       return null;
     }
 }

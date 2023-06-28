@@ -7,9 +7,11 @@
             <file>file:/D:/Project/library_app/src/home/HomePage.java</file>
             <file>file:/D:/Project/library_app/src/transaction/FormPinjam.java</file>
             <file>file:/D:/Project/library_app/src/transaction/FormSearchBook.java</file>
-            <file>file:/D:/Project/library_app/src/authentiocation/FormLogin.java</file>
+            <file>file:/D:/Project/library_app/src/library_app/Library_app.java</file>
             <file>file:/D:/Project/library_app/src/transaction/FormPinjamBuku.java</file>
+            <file>file:/D:/Project/library_app/src/transaction/CheckoutItem.java</file>
             <file>file:/D:/Project/library_app/src/transaction/FormSearchSiswa.java</file>
+            <file>file:/D:/Project/library_app/src/buku/BukuController.java</file>
         </group>
     </open-files>
 </project-private>

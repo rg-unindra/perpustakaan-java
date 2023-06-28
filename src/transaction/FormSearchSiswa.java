@@ -5,17 +5,52 @@
  */
 package transaction;
 
+import java.awt.event.KeyEvent;
+import javax.swing.JFrame;
+import siswa.*;
+import utils.Utils;
+
 /**
  *
  * @author Farhan Fadila
  */
 public class FormSearchSiswa extends javax.swing.JFrame {
-
+    private final SiswaController siswaController = new SiswaController();
+    private final Utils utils = new Utils();
     /**
      * Creates new form FormSearchSiswa
      */
     public FormSearchSiswa() {
         initComponents();
+        txt_nisn.setText("201943500487");
+    }
+    
+    private void onNext() {
+        try {
+           String nisn = txt_nisn.getText();
+           
+           
+           if(nisn.isEmpty()) {
+               utils.errorDialog(this, "NISN tidak boleh kosong");
+               return;
+           }
+           
+           Siswa siswa = siswaController.detail(nisn);
+           
+           if(siswa == null) {
+               throw new Exception("Siswa dengan NISN " + nisn + " tidak ditemukan!");
+           }
+            
+           
+           
+            JFrame frame = new FormPinjamBuku(nisn);
+            this.dispose();
+            frame.setVisible(true);
+            frame.setAlwaysOnTop(true);
+       } catch(Exception ex) {
+           System.out.println(ex);
+           utils.errorDialog(this, ex.getMessage());
+       }
     }
 
     /**
@@ -30,7 +65,7 @@ public class FormSearchSiswa extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        txt_username = new javax.swing.JTextField();
+        txt_nisn = new javax.swing.JTextField();
         btn_next = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -48,7 +83,7 @@ public class FormSearchSiswa extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -57,11 +92,16 @@ public class FormSearchSiswa extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 204, 51));
 
-        txt_username.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txt_username.setMargin(new java.awt.Insets(2, 10, 2, 5));
-        txt_username.addActionListener(new java.awt.event.ActionListener() {
+        txt_nisn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txt_nisn.setMargin(new java.awt.Insets(2, 10, 2, 5));
+        txt_nisn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_usernameActionPerformed(evt);
+                txt_nisnActionPerformed(evt);
+            }
+        });
+        txt_nisn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_nisnKeyPressed(evt);
             }
         });
 
@@ -99,7 +139,7 @@ public class FormSearchSiswa extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(btn_next, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nisn, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(124, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -110,7 +150,7 @@ public class FormSearchSiswa extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_username, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_nisn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_next, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(192, 192, 192))
@@ -135,21 +175,27 @@ public class FormSearchSiswa extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usernameActionPerformed
+    private void txt_nisnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nisnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_usernameActionPerformed
+    }//GEN-LAST:event_txt_nisnActionPerformed
 
     private void btn_nextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nextMouseClicked
-
+        onNext();
     }//GEN-LAST:event_btn_nextMouseClicked
 
     private void btn_nextMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nextMousePressed
-       
+      
     }//GEN-LAST:event_btn_nextMousePressed
 
     private void btn_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_nextActionPerformed
+
+    private void txt_nisnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nisnKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+          onNext();
+        }
+    }//GEN-LAST:event_txt_nisnKeyPressed
 
     /**
      * @param args the command line arguments
@@ -193,6 +239,6 @@ public class FormSearchSiswa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txt_username;
+    private javax.swing.JTextField txt_nisn;
     // End of variables declaration//GEN-END:variables
 }

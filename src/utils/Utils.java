@@ -182,4 +182,13 @@ public class Utils {
         
         return index;
     }
+    
+    public boolean isNumber(String text) {
+        try {
+            Integer.parseInt(text);
+            return true; // It is a number
+        } catch (NumberFormatException e) {
+            return false; // It is not a number
+        }
+    }
 }

@@ -7,47 +7,46 @@ package buku;
 
 /**
  *
- * @author Farhan Fadila
+ * @author KKP Unindra
  */
 public class Buku {
-    public int id;
-    public int id_kategori;
-    public int id_rak;
+    public String idBuku;
     public String judul;
-    public String keterangan;
-    public String isbn;
-    public String penerbit;
     public String pengarang;
+    public String penerbit;
     public int tahun;
-    public int halaman;
     public int jumlah;
-    public long tanggal_masuk;
+    public long tanggalMasuk;
     
     public Buku(
-        int id,
-        int id_kategori,
-        int id_rak,
+        String idBuku,
         String judul,
-        String keterangan,
-        String isbn,
-        String penerbit,
         String pengarang,
+        String penerbit,
         int tahun,
-        int halaman,
         int jumlah,
-        long tanggal_masuk
+        long tanggalMasuk
     ) {
-        this.id = id;
-        this.id_kategori = id_kategori;
-        this.id_rak = id_rak;
+        this.idBuku = idBuku;
         this.judul = judul;
-        this.keterangan = keterangan;
-        this.isbn = isbn;
-        this.penerbit = penerbit;
         this.pengarang = pengarang;
+        this.penerbit = penerbit;
         this.tahun = tahun;
-        this.halaman = halaman;
         this.jumlah = jumlah;
-        this.tanggal_masuk = tanggal_masuk;
+        this.tanggalMasuk = tanggalMasuk;
+    }
+    
+    
+    @Override
+    public String toString() {
+        return "Buku{" +
+                "idBuku='" + idBuku + '\'' +
+                ", judul='" + judul + '\'' +
+                ", pengarang='" + pengarang + '\'' +
+                ", penerbit='" + penerbit + '\'' +
+                ", tahun=" + tahun +
+                ", jumlah=" + jumlah +
+                ", tanggalMasuk=" + tanggalMasuk +
+                '}';
     }
 }

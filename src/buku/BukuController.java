@@ -31,9 +31,7 @@ public class BukuController extends Koneksi {
 
         try {
             while (result.next()) {
-                temp.add(new Buku(result.getInt(1), result.getInt(2), result.getInt(3), result.getString(4),
-                        result.getString(5), result.getString(6), result.getString(7), result.getString(8),
-                        result.getInt(9), result.getInt(10), result.getInt(11), result.getLong(12)));
+                temp.add(buku(result));
             }
         } catch (SQLException ex) {
             Logger.getLogger(BukuController.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,22 +40,23 @@ public class BukuController extends Koneksi {
         return temp;
     }
 
-    public boolean tambah(
-            int id_kategori,
-            int id_rak,
-            String judul,
-            String keterangan,
-            String isbn,
-            String penerbit,
-            String pengarang,
-            int tahun,
-            int halaman,
-            int jumlah,
-            long tanggal_masuk
+    public boolean simpan(
+        String idBuku,
+        String judul,
+        String pengarang,
+        String penerbit,
+        int tahun,
+        int jumlah,
+        long tanggalMasuk
     ) {
         try {
-            Object[] object = { id_kategori, id_rak , judul, keterangan, isbn, penerbit, pengarang, tahun, halaman, jumlah, tanggal_masuk};
-            executeQuery2("INSERT INTO `buku` (id_kategori, id_rak, judul, keterangan, isbn, penerbit, pengarang, tahun, halaman, jumlah, tanggal_masuk) VALUES " + objectToString(object));
+            boolean isExist = isBookExist(idBuku);
+            
+            if(isExist) {
+             return edit(idBuku, judul, pengarang, penerbit, tahun, jumlah, tanggalMasuk);
+            }
+            Object[] object = {idBuku, judul, pengarang, penerbit, tahun, jumlah, tanggalMasuk};
+            executeQuery2("INSERT INTO `buku` (id_buku, judul, pengarang, penerbit, tahun,jumlah, tanggal_masuk) VALUES " + objectToString(object));
             return true;
         } catch (Exception ex) {
             System.out.println("Tambah Buku Exception => " + ex);
@@ -66,51 +65,40 @@ public class BukuController extends Koneksi {
     }
 
     public boolean edit(
-            int id,
-            int id_kategori,
-            int id_rak,
-            String judul,
-            String keterangan,
-            String isbn,
-            String penerbit,
-            String pengarang,
-            int tahun,
-            int halaman,
-            int jumlah,
-            long tanggal_masuk) {
+        String idBuku,
+        String judul,
+        String pengarang,
+        String penerbit,
+        int tahun,
+        int jumlah,
+        long tanggalMasuk
+    ) {
         try {
             String updateQuery = "UPDATE buku SET " +
-                                "id_kategori = " + id_kategori + ", " +
-                                "id_rak = " + id_rak + ", " +
                                 "judul = '" + judul + "', " +
-                                "keterangan = '" + keterangan + "', " +
-                                "isbn = '" + isbn + "', " +
-                                "penerbit = '" + penerbit + "', " +
                                 "pengarang = '" + pengarang + "', " +
+                                "penerbit = '" + penerbit + "', " +
                                 "tahun = " + tahun + ", " +
-                                "halaman = " + halaman + ", " +
                                 "jumlah = " + jumlah + ", " +
-                                "tanggal_masuk = " + tanggal_masuk + " " +
-                                "WHERE id_buku = " + id;
+                                "tanggal_masuk = " + tanggalMasuk + " " +
+                                "WHERE id_buku = '" + idBuku + "'";
 
             executeQuery2(updateQuery);
 
             return true;
         } catch (Exception ex) {
-            System.out.println("Tambah Buku Exception => " + ex);
+            System.out.println("Tambah Exception => " + ex);
             return false;
         }
     }
 
-    public Buku detail(int id) {
+    public Buku detail(String idBuku) {
 
-        ResultSet result = executeQuery("SELECT * FROM `buku` WHERE id_buku = " + id);
+        ResultSet result = executeQuery("SELECT * FROM `buku` WHERE id_buku = '" + idBuku + "'" );
 
         try {
             if (result.next()) {
-                return new Buku(result.getInt(1), result.getInt(2), result.getInt(3), result.getString(4),
-                        result.getString(5), result.getString(6), result.getString(7), result.getString(8),
-                        result.getInt(9), result.getInt(10), result.getInt(11), result.getLong(12));
+                return buku(result);
 
             }
         } catch (SQLException ex) {
@@ -119,9 +107,9 @@ public class BukuController extends Koneksi {
         return null;
     }
 
-    public boolean hapus(int id) {
+    public boolean hapus(String idBuku) {
         try {
-            executeQuery2("DELETE FROM `buku` WHERE `id_buku` = " + id);
+            executeQuery2("DELETE FROM `buku` WHERE `id_buku` = '" + idBuku + "'");
             return true;
         } catch (Exception ex) {
             return false;
@@ -131,18 +119,32 @@ public class BukuController extends Koneksi {
     public List<Buku> search(String query) {
        List<Buku> temp = new ArrayList<>();
 
-        ResultSet result = executeQuery("SELECT * FROM `buku` WHERE CONCAT(id_buku, judul, keterangan, isbn, penerbit, pengarang, tahun, halaman, jumlah, tanggal_masuk) LIKE '%" + query + "%' ORDER BY `judul` ASC");
+        ResultSet result = executeQuery("SELECT * FROM `buku` WHERE CONCAT(id_buku, judul, pengarang, penerbit, tahun, jumlah) LIKE '%" + query + "%' ORDER BY `judul` ASC");
 
         try {
             while (result.next()) {
-                temp.add(new Buku(result.getInt(1), result.getInt(2), result.getInt(3), result.getString(4),
-                        result.getString(5), result.getString(6), result.getString(7), result.getString(8),
-                        result.getInt(9), result.getInt(10), result.getInt(11), result.getLong(12)));
+                temp.add(buku(result));
             }
         } catch (SQLException ex) {
             Logger.getLogger(BukuController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return temp;
+    }
+    
+    public boolean isBookExist(String idBuku) {
+           return isIDExist("buku", "id_buku", idBuku);
+    }
+    
+    private Buku buku(ResultSet result) {
+       try {
+            return new Buku(result.getString(1),result.getString(2), result.getString(3), result.getString(4),
+                            result.getInt(5), result.getInt(6),
+                            result.getLong(7));
+       } catch(SQLException ex) {
+          ex.printStackTrace();
+       }
+       
+       return null;
     }
 } 

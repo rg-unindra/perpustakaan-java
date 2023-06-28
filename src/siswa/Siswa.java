@@ -10,24 +10,24 @@ package siswa;
  * @author Farhan Fadila
  */
 public class Siswa {
-    public int id;
     public String nisn;
-    public String nama_siswa;
+    public String namaSiswa;
+    public String kelas;
+    public String alamat;
     public String telepon;
-    public int tahun_angkatan;
     
     
   public  Siswa( 
-     int id,
-     String nisn,
-     String nama_siswa,
-     String telepon,
-     int tahun_angkatan   
+        String nisn,
+        String namaSiswa,
+        String kelas,
+        String alamat,
+        String telepon
     ) {
-      this.id = id;
       this.nisn = nisn;
-      this.nama_siswa = nama_siswa;
+      this.namaSiswa = namaSiswa;
+      this.kelas = kelas;
+      this.alamat = alamat;
       this.telepon = telepon;
-      this.tahun_angkatan = tahun_angkatan;
     }
 }

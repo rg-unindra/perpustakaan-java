@@ -8,11 +8,8 @@ package home;
 import authentiocation.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import kategori.FormKategori;
-import rak.FormRak;
 import buku.FormBuku;
 import siswa.FormSiswa;
-import transaction.FormPeminjaman;
 import transaction.FormPinjam;
 
 /**
@@ -33,26 +30,17 @@ public class HomePage extends javax.swing.JFrame {
        JFrame frame;
        
         switch(menu) {
-            case "kategori":
-                frame = new FormKategori();
-                break;
             case "buku":
                 frame = new FormBuku();
                 break;
             case "siswa":
                 frame = new FormSiswa();
                 break;
-            case "peminjaman":
-                frame = new FormPeminjaman();
-                break;
-            case "pinjam":
+            default:
                 frame = new FormPinjam();
                 break;
-            default:
-                frame = new FormRak();
         }
-        
-       frame.setAlwaysOnTop(true);
+       
        frame.setVisible(true);
     }
     
@@ -70,15 +58,13 @@ public class HomePage extends javax.swing.JFrame {
         parent = new javax.swing.JPanel();
         ic_buku = new javax.swing.JLabel();
         ic_pinjam = new javax.swing.JLabel();
-        ic_rak = new javax.swing.JLabel();
-        ic_kategori = new javax.swing.JLabel();
         ic_siswa = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        ic_pengembalian = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1024, 768));
         setResizable(false);
         setSize(new java.awt.Dimension(1024, 768));
 
@@ -101,24 +87,6 @@ public class HomePage extends javax.swing.JFrame {
         ic_pinjam.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 ic_pinjamMousePressed(evt);
-            }
-        });
-
-        ic_rak.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        ic_rak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_rak.png"))); // NOI18N
-        ic_rak.setText("Rak");
-        ic_rak.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_rakMousePressed(evt);
-            }
-        });
-
-        ic_kategori.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        ic_kategori.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_kategori.png"))); // NOI18N
-        ic_kategori.setText("Kategori");
-        ic_kategori.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ic_kategoriMousePressed(evt);
             }
         });
 
@@ -168,6 +136,15 @@ public class HomePage extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Menu Aplikasi Perpustakaan");
 
+        ic_pengembalian.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ic_pengembalian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_pinjam.png"))); // NOI18N
+        ic_pengembalian.setText("Pengembalian");
+        ic_pengembalian.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ic_pengembalianMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout parentLayout = new javax.swing.GroupLayout(parent);
         parent.setLayout(parentLayout);
         parentLayout.setHorizontalGroup(
@@ -180,16 +157,15 @@ public class HomePage extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(parentLayout.createSequentialGroup()
                         .addGap(253, 253, 253)
-                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ic_siswa)
-                            .addComponent(ic_pinjam))
+                        .addComponent(ic_pinjam)
                         .addGap(60, 60, 60)
-                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ic_buku)
-                            .addComponent(ic_rak))
-                        .addGap(60, 60, 60)
-                        .addComponent(ic_kategori)))
-                .addContainerGap(284, Short.MAX_VALUE))
+                        .addComponent(ic_buku)
+                        .addGap(50, 50, 50)
+                        .addComponent(ic_siswa))
+                    .addGroup(parentLayout.createSequentialGroup()
+                        .addGap(253, 253, 253)
+                        .addComponent(ic_pengembalian)))
+                .addContainerGap(310, Short.MAX_VALUE))
         );
         parentLayout.setVerticalGroup(
             parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,22 +174,13 @@ public class HomePage extends javax.swing.JFrame {
                 .addGap(78, 78, 78)
                 .addComponent(jLabel1)
                 .addGap(77, 77, 77)
-                .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(parentLayout.createSequentialGroup()
-                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ic_pinjam)
-                            .addComponent(ic_buku))
-                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(parentLayout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(ic_siswa))
-                            .addGroup(parentLayout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(ic_rak))))
-                    .addGroup(parentLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(ic_kategori)))
-                .addContainerGap(301, Short.MAX_VALUE))
+                .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ic_pinjam)
+                    .addComponent(ic_buku)
+                    .addComponent(ic_siswa))
+                .addGap(45, 45, 45)
+                .addComponent(ic_pengembalian)
+                .addContainerGap(306, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -247,14 +214,6 @@ public class HomePage extends javax.swing.JFrame {
         navigasi("siswa");
     }//GEN-LAST:event_ic_siswaMousePressed
 
-    private void ic_kategoriMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_kategoriMousePressed
-        navigasi("kategori");
-    }//GEN-LAST:event_ic_kategoriMousePressed
-
-    private void ic_rakMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_rakMousePressed
-        navigasi("rak");
-    }//GEN-LAST:event_ic_rakMousePressed
-
     private void ic_pinjamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_pinjamMousePressed
         navigasi("pinjam");
     }//GEN-LAST:event_ic_pinjamMousePressed
@@ -263,46 +222,15 @@ public class HomePage extends javax.swing.JFrame {
         navigasi("buku");
     }//GEN-LAST:event_ic_bukuMousePressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void ic_pengembalianMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_pengembalianMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ic_pengembalianMousePressed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new HomePage().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ic_buku;
-    private javax.swing.JLabel ic_kategori;
+    private javax.swing.JLabel ic_pengembalian;
     private javax.swing.JLabel ic_pinjam;
-    private javax.swing.JLabel ic_rak;
     private javax.swing.JLabel ic_siswa;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
