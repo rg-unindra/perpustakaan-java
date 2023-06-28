@@ -191,4 +191,36 @@ public class Utils {
             return false; // It is not a number
         }
     }
+    
+    public String generateRandomBarcode(int length) {
+        String barcodeChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Characters to use in the barcode
+        StringBuilder barcode = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(barcodeChars.length());
+            char randomChar = barcodeChars.charAt(randomIndex);
+            barcode.append(randomChar);
+        }
+
+        return barcode.toString();
+    }
+    
+    public String convertArray2String(Object[] array) {
+         StringBuilder arrayAsStringBuilder = new StringBuilder();
+         
+         for (int i = 0; i < array.length; i++) {
+            if(array[i] == null) break;
+            arrayAsStringBuilder.append(array[i]);
+            if (i < array.length - 1) {
+               if(array[i + 1] != null) {
+                    arrayAsStringBuilder.append(",");
+               }
+            }
+         }
+         
+        
+          
+         return arrayAsStringBuilder.toString();
+    }
 }

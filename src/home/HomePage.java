@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import buku.FormBuku;
 import siswa.FormSiswa;
-import transaction.FormPinjam;
+import peminjaman.FormPinjam;
 
 /**
  *
@@ -60,7 +60,7 @@ public class HomePage extends javax.swing.JFrame {
         ic_pinjam = new javax.swing.JLabel();
         ic_siswa = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btn_logout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         ic_pengembalian = new javax.swing.JLabel();
 
@@ -102,17 +102,17 @@ public class HomePage extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 204, 51));
         jPanel1.setMaximumSize(new java.awt.Dimension(900, 900));
 
-        jButton1.setBackground(new java.awt.Color(255, 51, 51));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Logout");
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusPainted(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setRequestFocusEnabled(false);
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_logout.setBackground(new java.awt.Color(255, 51, 51));
+        btn_logout.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btn_logout.setForeground(new java.awt.Color(255, 255, 255));
+        btn_logout.setText("Logout");
+        btn_logout.setBorderPainted(false);
+        btn_logout.setFocusPainted(false);
+        btn_logout.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_logout.setRequestFocusEnabled(false);
+        btn_logout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton1MousePressed(evt);
+                btn_logoutMousePressed(evt);
             }
         });
 
@@ -122,14 +122,14 @@ public class HomePage extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btn_logout)
                 .addGap(30, 30, 30))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_logout, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -198,7 +198,7 @@ public class HomePage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+    private void btn_logoutMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_logoutMousePressed
         final boolean logout = authenticationController.logout();
 
         if(logout) {
@@ -208,7 +208,7 @@ public class HomePage extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Gagal Logout");
         }
-    }//GEN-LAST:event_jButton1MousePressed
+    }//GEN-LAST:event_btn_logoutMousePressed
 
     private void ic_siswaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_siswaMousePressed
         navigasi("siswa");
@@ -228,11 +228,11 @@ public class HomePage extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_logout;
     private javax.swing.JLabel ic_buku;
     private javax.swing.JLabel ic_pengembalian;
     private javax.swing.JLabel ic_pinjam;
     private javax.swing.JLabel ic_siswa;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel parent;
