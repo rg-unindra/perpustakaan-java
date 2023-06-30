@@ -28,7 +28,6 @@ public class FormDetailPengembalian extends javax.swing.JFrame {
     private final Utils utils = new Utils();
     
     private String idPengembalian;
-    private Pengembalian pengembalian;
 
     /**
      * Creates new form FormDetailPengembalian
@@ -37,12 +36,11 @@ public class FormDetailPengembalian extends javax.swing.JFrame {
         initComponents();
         this.idPengembalian = idPengembalian;
         getDetailPengembalian();
-        initColumnTabel();
     }
     
     private void getDetailPengembalian() {
         try {
-            pengembalian = pengembalianController.detail(idPengembalian);
+            Pengembalian pengembalian = pengembalianController.detail(idPengembalian);
             
             initTopSection(pengembalian.nisn);
             initBottomSection(pengembalian);
@@ -76,6 +74,7 @@ public class FormDetailPengembalian extends javax.swing.JFrame {
             lbl_admin_pinjam.setText(adminPinjam.username);
             lbl_admin_pengembalian.setText(adminPengembalian.username);
             
+            initColumnTabel();
             initRowTabel(peminjaman.idBuku, peminjaman.jumlah);
         } catch(Exception ex) {
             System.out.println(ex);
@@ -98,26 +97,22 @@ public class FormDetailPengembalian extends javax.swing.JFrame {
             String idBukuArrayString, 
             String jumlahArrayString) {
         try {
-            
-
-
             model.getDataVector().removeAllElements();
             model.fireTableDataChanged();
             
             String[] idBuku = idBukuArrayString.split(",");
             String[] jumlahBuku = jumlahArrayString.split(",");
-            
-           
-               for(int i = 0; i < idBuku.length; i++) {
-                   Object[] obj = new Object[4];
-                   Buku buku = bukuController.detail(idBuku[i]);
-                   
-                   obj[0] = i + 1;
-                   obj[1] = buku.idBuku;
-                   obj[2] = buku.judul;
-                   obj[3] = jumlahBuku[i];
-                   model.addRow(obj); 
-               }
+                    
+            for(int i = 0; i < idBuku.length; i++) {
+                Object[] obj = new Object[4];
+                Buku buku = bukuController.detail(idBuku[i]);
+
+                obj[0] = i + 1;
+                obj[1] = buku.idBuku;
+                obj[2] = buku.judul;
+                obj[3] = jumlahBuku[i];
+                model.addRow(obj); 
+            }
                
         } catch(Exception ex) {
             System.out.println("initRowTabel ERROR" + ex);

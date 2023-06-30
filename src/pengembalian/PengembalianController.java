@@ -56,11 +56,9 @@ public class PengembalianController extends Koneksi {
        List<Pengembalian> temp = new ArrayList<>();
        
        
-        String searchQuery = "SELECT * FROM `pengembalian` peng"
-                + "JOIN `peminjaman` pem ON pem.id_peminjaman = peng.id_peminjaman"
-                + "JOIN `siswa` s ON s.nisn = peng.nisn"
-                + "WHERE CONCAT(peng.id_pengembalian, peng.id_peminjaman, peng.nisn, peng.tanggal_pengembalian, s.nama_siswa) "
-                + "LIKE '% " + query + "%'";
+        String searchQuery = "SELECT * FROM `pengembalian`"
+                + "WHERE `id_pengembalian` "
+                + "LIKE '%" + query + "%'";
 
         ResultSet result = executeQuery(searchQuery);
 
@@ -113,6 +111,15 @@ public class PengembalianController extends Koneksi {
         return false;
      }
    }
+    
+    public boolean hapusByNISN(String nisn) {
+        try {
+            executeQuery2("DELETE FROM `pengembalian` WHERE `nisn` = '" + nisn + "'");
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
     
     public boolean isIDExist(String idPengembalian) {
            return isIDExist("pengembalian", "id_pengembalian", idPengembalian);

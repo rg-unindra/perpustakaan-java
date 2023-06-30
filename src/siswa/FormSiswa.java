@@ -14,6 +14,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import peminjaman.PeminjamanController;
+import pengembalian.PengembalianController;
 import utils.Utils;
 
 /**
@@ -21,9 +23,12 @@ import utils.Utils;
  * @author Farhan Fadila
  */
 public class FormSiswa extends javax.swing.JFrame {
-    private DefaultTableModel model;
-    final SiswaController siswaController = new SiswaController();
+   
+    private final SiswaController siswaController = new SiswaController();
+    private final PeminjamanController peminjamanController = new PeminjamanController();
+    private final PengembalianController pengembalianController = new PengembalianController();
     private final Utils utils = new Utils();
+    private DefaultTableModel model;
      
     /**
      * Creates new form FormKategori
@@ -113,7 +118,6 @@ public class FormSiswa extends javax.swing.JFrame {
             model.getDataVector().removeAllElements();
             model.fireTableDataChanged();
             
-           
             List<Siswa> data = siswaController.search(query);
             
             for(int i = 0; i < data.size(); i++) {
@@ -133,10 +137,12 @@ public class FormSiswa extends javax.swing.JFrame {
     }
     
     private void resetForm() {
+        txt_nisn.setEditable(true);
         txt_nisn.setText("");
         txt_nama.setText("");
         txt_alamat.setText("");
         txt_telepon.setText("");
+        cmb_kelas.setSelectedIndex(0);
     }
 
     /**
@@ -151,7 +157,7 @@ public class FormSiswa extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btn_simpan = new javax.swing.JButton();
         btn_hapus = new javax.swing.JButton();
-        btn_laporan = new javax.swing.JButton();
+        btn_reset = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_alamat = new javax.swing.JTextArea();
         jLabel9 = new javax.swing.JLabel();
@@ -168,19 +174,28 @@ public class FormSiswa extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_search = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        btn_laporan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        btn_simpan.setBackground(new java.awt.Color(51, 153, 255));
+        btn_simpan.setForeground(new java.awt.Color(255, 255, 255));
         btn_simpan.setText("Simpan");
+        btn_simpan.setBorder(null);
+        btn_simpan.setBorderPainted(false);
         btn_simpan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_simpanMousePressed(evt);
             }
         });
 
+        btn_hapus.setBackground(new java.awt.Color(255, 0, 51));
+        btn_hapus.setForeground(new java.awt.Color(255, 255, 255));
         btn_hapus.setText("Hapus");
+        btn_hapus.setBorder(null);
+        btn_hapus.setBorderPainted(false);
         btn_hapus.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_hapusMousePressed(evt);
@@ -192,15 +207,19 @@ public class FormSiswa extends javax.swing.JFrame {
             }
         });
 
-        btn_laporan.setText("Laporan");
-        btn_laporan.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_reset.setBackground(new java.awt.Color(102, 204, 255));
+        btn_reset.setForeground(new java.awt.Color(255, 255, 255));
+        btn_reset.setText("Reset");
+        btn_reset.setBorder(null);
+        btn_reset.setBorderPainted(false);
+        btn_reset.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_laporanMousePressed(evt);
+                btn_resetMousePressed(evt);
             }
         });
-        btn_laporan.addActionListener(new java.awt.event.ActionListener() {
+        btn_reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_laporanActionPerformed(evt);
+                btn_resetActionPerformed(evt);
             }
         });
 
@@ -243,6 +262,22 @@ public class FormSiswa extends javax.swing.JFrame {
 
         jLabel10.setText("Cari");
 
+        btn_laporan.setBackground(new java.awt.Color(204, 204, 0));
+        btn_laporan.setForeground(new java.awt.Color(255, 255, 255));
+        btn_laporan.setText("Laporan");
+        btn_laporan.setBorder(null);
+        btn_laporan.setBorderPainted(false);
+        btn_laporan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_laporanMousePressed(evt);
+            }
+        });
+        btn_laporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_laporanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -261,18 +296,20 @@ public class FormSiswa extends javax.swing.JFrame {
                                 .addGap(1, 1, 1)
                                 .addComponent(jLabel6)))
                         .addGap(54, 54, 54)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_telepon)
-                            .addComponent(cmb_kelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_nama)
-                            .addComponent(txt_nisn)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btn_reset, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_telepon)
+                                .addComponent(cmb_kelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_nama)
+                                .addComponent(txt_nisn)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(48, 48, 48)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -320,8 +357,10 @@ public class FormSiswa extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btn_reset, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
@@ -343,13 +382,15 @@ public class FormSiswa extends javax.swing.JFrame {
 
     private void btn_simpanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_simpanMousePressed
         try {
-            String nisn = txt_nisn.getText();
+            String nisn = txt_nisn.getText().trim();
             String nama = txt_nama.getText();
             String telepon = txt_telepon.getText();
             String alamat = txt_telepon.getText();
             String kelas = cmb_kelas.getSelectedItem().toString();
-
-           
+            
+            if(siswaController.isNISNExist(nisn)) {
+                throw new Exception("NISN " + nisn + " telah terdaftar");
+            }
 
             boolean berhasil = siswaController.tambah(nisn, nama, kelas, alamat, telepon);
             
@@ -371,84 +412,66 @@ public class FormSiswa extends javax.swing.JFrame {
 
             Siswa item = siswaController.detail(nisn);
 
-            int dialogResult = utils.errorDialog(this, "Kamu yakin ingin menghapus data " + item.namaSiswa + "?");
+            int dialogResult = utils.errorDialog(this, 
+                    "Kamu yakin ingin menghapus data " + item.namaSiswa + "? menghapus data siswa juga akan menghapus "
+                    + "data peminjaman, pengembalian dari siswa yang dihapus");
 
             if(dialogResult == JOptionPane.YES_OPTION) {
                 siswaController.hapus(nisn);
+                peminjamanController.hapusByNISN(nisn);
+                pengembalianController.hapusByNISN(nisn);
+                
                 resetForm();
                 initRowTabel();
             }
-        } catch(Exception ex) {}
+        } catch(Exception ex) {
+            System.out.println(ex);
+        }
     }//GEN-LAST:event_btn_hapusMousePressed
 
     private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_hapusActionPerformed
 
-    private void btn_laporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laporanActionPerformed
+    private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_laporanActionPerformed
+    }//GEN-LAST:event_btn_resetActionPerformed
 
     private void tbl_siswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_siswaMouseClicked
        try {
             int index =  tbl_siswa.getSelectedRow();
             TableModel mdl = tbl_siswa.getModel();
-            String nisn = mdl.getValueAt(index, 0).toString();
+            String nisn = mdl.getValueAt(index, 1).toString();
             Siswa item = siswaController.detail(nisn);
             
             
-         
+            txt_nisn.setEditable(false);
             txt_nisn.setText(item.nisn);
             txt_nama.setText(item.namaSiswa);
             txt_telepon.setText(item.telepon);
             txt_alamat.setText(item.alamat);
             cmb_kelas.setSelectedItem(item.kelas);
-        } catch(Exception ex) {}
+        } catch(Exception ex) {
+            
+        }
     }//GEN-LAST:event_tbl_siswaMouseClicked
 
+    private void btn_resetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_resetMousePressed
+        resetForm();
+    }//GEN-LAST:event_btn_resetMousePressed
+
     private void btn_laporanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMousePressed
-       utils.bukaLaporan("laporan_siswa", siswaController.con);
+         utils.bukaLaporan("laporan_siswa", siswaController.con);
     }//GEN-LAST:event_btn_laporanMousePressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormSiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormSiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormSiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormSiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormSiswa().setVisible(true);
-            }
-        });
-    }
+    private void btn_laporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laporanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_laporanActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_hapus;
     private javax.swing.JButton btn_laporan;
+    private javax.swing.JButton btn_reset;
     private javax.swing.JButton btn_simpan;
     private javax.swing.JComboBox<String> cmb_kelas;
     private javax.swing.JLabel jLabel10;

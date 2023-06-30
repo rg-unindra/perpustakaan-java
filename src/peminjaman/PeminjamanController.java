@@ -133,6 +133,15 @@ public class PeminjamanController extends Koneksi {
         }
     }
     
+    public boolean hapusByNISN(String nisn) {
+        try {
+            executeQuery2("DELETE FROM `peminjaman` WHERE `nisn` = '" + nisn + "'");
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+    
     public boolean isIDExist(String idPeminjaman) {
            return isIDExist("peminjaman", "id_peminjaman", idPeminjaman);
     }

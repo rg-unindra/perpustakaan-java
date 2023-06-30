@@ -126,6 +126,10 @@ public class SiswaController extends Koneksi {
         }
     }
      
+    public boolean isNISNExist(String nisn) {
+        return isIDExist("siswa", "nisn", nisn);
+    } 
+     
      
     private Siswa siswa(ResultSet result) {
        try {

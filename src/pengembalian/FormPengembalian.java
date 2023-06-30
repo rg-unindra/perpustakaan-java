@@ -5,7 +5,11 @@
  */
 package pengembalian;
 
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import siswa.*;
 import utils.*;
 
 /**
@@ -14,6 +18,7 @@ import utils.*;
  */
 public class FormPengembalian extends javax.swing.JFrame {
     private final PengembalianController pengembalianController = new PengembalianController();
+    private final SiswaController siswaController = new SiswaController();
     
     private DisableEditTableModel model;
     private final Utils utils = new Utils();
@@ -24,6 +29,9 @@ public class FormPengembalian extends javax.swing.JFrame {
     public FormPengembalian() {
         initComponents();
         initColumnTabel();
+        initRowTabel();
+        listenSearch();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);   
     }
     
     private void initColumnTabel() {
@@ -32,10 +40,94 @@ public class FormPengembalian extends javax.swing.JFrame {
         tbl_pengembalian.setModel(model);
         model.addColumn("No");
         model.addColumn("ID Pengembalian");
+        model.addColumn("NISN");
         model.addColumn("Siswa");
         model.addColumn("Denda");
         model.addColumn("Lama Pinjam");
         model.addColumn("Tanggal Pengembalian");
+    }
+    
+    private void initRowTabel() {
+        try {
+            model.getDataVector().removeAllElements();
+            model.fireTableDataChanged();
+            
+            List<Pengembalian> data = pengembalianController.data();
+            
+            for(int i = 0; i < data.size(); i++) {
+               Object[] obj = new Object[7];
+               Pengembalian item = data.get(i);
+               Siswa siswa = siswaController.detail(item.nisn);
+               
+               obj[0] = i + 1;
+               obj[1] = item.idPengembalian;
+               obj[2] = item.nisn;
+               obj[3] = siswa.namaSiswa;
+               obj[4] =  utils.formatToRupiah(item.denda);
+               obj[5] = String.valueOf(item.lamaPinjam) + " hari";
+               obj[6] = item.tanggalPengembalian;
+               
+               model.addRow(obj); 
+            } 
+        } catch(Exception ex) {
+            System.out.println(ex);
+        }
+    }
+    
+    private void listenSearch() {
+        txt_search.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+               onSearch();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                onSearch();
+            }
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
+    }
+    
+    private void onSearch() {
+        try {
+            String query = txt_search.getText();
+            
+            if(query.isEmpty()) {
+                initRowTabel();
+                return;
+            }
+            
+            List<Pengembalian> data = pengembalianController.search(query);
+           
+            
+            fillRow(data);
+        } catch(Exception ex) {
+            System.out.println("onSearch ex" + ex);
+        }
+    }
+    
+    private void fillRow(List<Pengembalian> data) {
+         try {
+            model.getDataVector().removeAllElements();
+            model.fireTableDataChanged();
+            
+            for(int i = 0; i < data.size(); i++) {
+               Object[] obj = new Object[7];
+               Pengembalian item = data.get(i);
+               Siswa siswa = siswaController.detail(item.nisn);
+               
+               obj[0] = i + 1;
+               obj[1] = item.idPengembalian;
+               obj[2] = item.nisn;
+               obj[3] = siswa.namaSiswa;
+               obj[4] =  utils.formatToRupiah(item.denda);
+               obj[5] = String.valueOf(item.lamaPinjam) + " hari";
+               obj[6] = item.tanggalPengembalian;
+               
+               model.addRow(obj); 
+            } 
+        } catch(Exception ex) {
+            System.out.println(ex);
+        }
     }
 
     /**
