@@ -141,7 +141,7 @@ public class HomePage extends javax.swing.JFrame {
         jLabel1.setText("Menu Aplikasi Perpustakaan");
 
         ic_pengembalian.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        ic_pengembalian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_pinjam.png"))); // NOI18N
+        ic_pengembalian.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ic_pengembalian.png"))); // NOI18N
         ic_pengembalian.setText("Pengembalian");
         ic_pengembalian.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {

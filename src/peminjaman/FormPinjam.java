@@ -11,9 +11,11 @@ import buku.BukuController;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import laporan.FormPilihTanggalLaporan;
+import pengembalian.FormDetailPengembalian;
 import pengembalian.PengembalianController;
 import siswa.*;
 import utils.*;
@@ -352,6 +354,13 @@ public class FormPinjam extends javax.swing.JFrame {
             if (peminjaman == null) {
                 throw new Exception("Data peminjaman dari id = " + idPeminjaman + " tidak ditemukan" );
             }
+            
+            int dialogResult = utils.errorDialog(this, "Apakah Anda yakin ingin mengembalikan peminjaman buku ini?");
+            
+            if(!(dialogResult == JOptionPane.YES_OPTION)) {
+                return;
+            }
+            
             User user = authenticationController.currentSession();
             Date startDate = utils.stringToDate(peminjaman.tanggalPinjam);
             Date endDate = utils.dateTimeNow();
@@ -379,6 +388,10 @@ public class FormPinjam extends javax.swing.JFrame {
             if (!berhasil) {
                 throw new Exception("Gagal menyimpan data");
             }
+            
+            JFrame frame = new FormDetailPengembalian(idPengembalian);
+            
+            frame.setVisible(true);
             
             initRowTabel();
        } catch (Exception ex) {

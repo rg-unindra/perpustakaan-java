@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import laporan.FormPilihTanggalLaporan;
 import siswa.*;
 import utils.*;
 
@@ -146,6 +147,7 @@ public class FormPengembalian extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btn_ok = new javax.swing.JButton();
         lbl_pinjam = new javax.swing.JLabel();
+        btn_laporan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -187,6 +189,17 @@ public class FormPengembalian extends javax.swing.JFrame {
         lbl_pinjam.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbl_pinjam.setText("Pengembalian");
 
+        btn_laporan.setBackground(new java.awt.Color(204, 204, 0));
+        btn_laporan.setForeground(new java.awt.Color(255, 255, 255));
+        btn_laporan.setText("Laporan");
+        btn_laporan.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_laporan.setBorderPainted(false);
+        btn_laporan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_laporanMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -196,6 +209,8 @@ public class FormPengembalian extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btn_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -219,7 +234,9 @@ public class FormPengembalian extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
                 .addGap(28, 28, 28)
-                .addComponent(btn_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37))
         );
 
@@ -260,8 +277,15 @@ public class FormPengembalian extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_tbl_pengembalianMouseClicked
 
+    private void btn_laporanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMousePressed
+        JFrame frame = new FormPilihTanggalLaporan("Laporan Pengembalian", "laporan_pengembalian");
+        
+        frame.setVisible(true);
+    }//GEN-LAST:event_btn_laporanMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_laporan;
     private javax.swing.JButton btn_ok;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

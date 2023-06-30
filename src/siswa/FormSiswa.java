@@ -51,6 +51,7 @@ public class FormSiswa extends javax.swing.JFrame {
         model.addColumn("Nama");
         model.addColumn("Kelas");
         model.addColumn("Telepon");
+        model.addColumn("Alamat");
     }
         
     private void initRowTabel() {
@@ -61,13 +62,14 @@ public class FormSiswa extends javax.swing.JFrame {
             
             
             for(int i = 0; i < data.size(); i++) {
-               Object[] obj = new Object[5];
+               Object[] obj = new Object[6];
                Siswa item = data.get(i);
                obj[0] = i + 1;
                obj[1] = item.nisn;
                obj[2] = item.namaSiswa;
                obj[3] = item.kelas;
                obj[4] = item.telepon;
+               obj[5] = item.alamat;
                model.addRow(obj); 
             } 
            
@@ -385,8 +387,9 @@ public class FormSiswa extends javax.swing.JFrame {
             String nisn = txt_nisn.getText().trim();
             String nama = txt_nama.getText();
             String telepon = txt_telepon.getText();
-            String alamat = txt_telepon.getText();
+            String alamat = txt_alamat.getText();
             String kelas = cmb_kelas.getSelectedItem().toString();
+            
             
             boolean isEdit = siswaController.isNISNExist(nisn);
             boolean berhasil = false;

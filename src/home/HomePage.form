@@ -207,7 +207,7 @@
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/assets/ic_pinjam.png"/>
+              <Image iconType="3" name="/assets/ic_pengembalian.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Pengembalian"/>
           </Properties>
