@@ -106,7 +106,7 @@ public class PeminjamanController extends Koneksi {
        
        
         String searchQuery = "SELECT * FROM `peminjaman`"
-                + "WHERE `id_peminjaman` LIKE '%" + query + "%'";
+                + "WHERE `id_peminjaman` LIKE '%" + query + "%' AND `status` = 'SDP'";
         
      
 
