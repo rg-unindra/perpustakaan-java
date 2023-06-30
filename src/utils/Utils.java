@@ -136,6 +136,28 @@ public class Utils {
         }
     }
     
+    public void bukaLaporan(String namaFile, Connection con, Map externalParams) {
+        try {
+            Map params = new HashMap();
+            params.put(JRParameter.REPORT_LOCALE, locale);
+            
+            params.putAll(externalParams);
+            
+            String reportDirectory = System.getProperty("user.dir") + "/src/laporan/" + namaFile;
+            String reportSource = reportDirectory  + ".jrxml";
+            String reportDestination = reportDirectory + ".jasper";
+
+            JasperReport report = JasperCompileManager.compileReport(reportSource);
+            JasperPrint print = JasperFillManager.fillReport(report, params, con);
+            JasperExportManager.exportReportToHtmlFile(print, reportDestination);
+            JasperViewer viewer = new JasperViewer(print, false, locale);
+            viewer.setAlwaysOnTop(true);
+            viewer.setVisible(true);
+        } catch(JRException ex) {
+            System.out.println(ex);
+        }
+    }
+    
     public String clearNumber(String value) {
         return value.replaceAll("[^0-9]+", "");
     }

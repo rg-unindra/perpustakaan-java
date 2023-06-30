@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import laporan.FormPilihTanggalLaporan;
 import pengembalian.PengembalianController;
 import siswa.*;
 import utils.*;
@@ -142,7 +143,7 @@ public class FormPinjam extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_peminjaman = new javax.swing.JTable();
         btn_tambah = new javax.swing.JButton();
-        btn_hapus = new javax.swing.JButton();
+        btn_laporan = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_search = new javax.swing.JTextField();
         lbl_pinjam = new javax.swing.JLabel();
@@ -186,22 +187,22 @@ public class FormPinjam extends javax.swing.JFrame {
             }
         });
 
-        btn_hapus.setBackground(new java.awt.Color(255, 0, 51));
-        btn_hapus.setForeground(new java.awt.Color(255, 255, 255));
-        btn_hapus.setText("Hapus");
-        btn_hapus.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_hapus.setBorderPainted(false);
-        btn_hapus.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_laporan.setBackground(new java.awt.Color(204, 204, 0));
+        btn_laporan.setForeground(new java.awt.Color(255, 255, 255));
+        btn_laporan.setText("Laporan");
+        btn_laporan.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_laporan.setBorderPainted(false);
+        btn_laporan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_hapusMouseClicked(evt);
+                btn_laporanMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_hapusMousePressed(evt);
+                btn_laporanMousePressed(evt);
             }
         });
-        btn_hapus.addActionListener(new java.awt.event.ActionListener() {
+        btn_laporan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hapusActionPerformed(evt);
+                btn_laporanActionPerformed(evt);
             }
         });
 
@@ -249,8 +250,8 @@ public class FormPinjam extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btn_pengembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(655, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -258,9 +259,9 @@ public class FormPinjam extends javax.swing.JFrame {
                                 .addGap(555, 555, 555)
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(txt_search, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
+                                .addComponent(txt_search, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 864, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 867, Short.MAX_VALUE)
                                 .addComponent(lbl_refresh))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(44, 44, 44))))
@@ -276,11 +277,11 @@ public class FormPinjam extends javax.swing.JFrame {
                     .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_pinjam))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_pengembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34))
         );
@@ -314,17 +315,19 @@ public class FormPinjam extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_tambahActionPerformed
 
-    private void btn_hapusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hapusMouseClicked
+    private void btn_laporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapusMouseClicked
+    }//GEN-LAST:event_btn_laporanMouseClicked
 
-    private void btn_hapusMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hapusMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapusMousePressed
+    private void btn_laporanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMousePressed
+        JFrame frame = new FormPilihTanggalLaporan("Laporan Peminjaman", "laporan_peminjaman");
+        
+        frame.setVisible(true);
+    }//GEN-LAST:event_btn_laporanMousePressed
 
-    private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
+    private void btn_laporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laporanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapusActionPerformed
+    }//GEN-LAST:event_btn_laporanActionPerformed
 
     private void lbl_refreshMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_refreshMousePressed
         initRowTabel();
@@ -390,7 +393,7 @@ public class FormPinjam extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_hapus;
+    private javax.swing.JButton btn_laporan;
     private javax.swing.JButton btn_pengembalian;
     private javax.swing.JButton btn_tambah;
     private javax.swing.JLabel jLabel1;

@@ -388,11 +388,16 @@ public class FormSiswa extends javax.swing.JFrame {
             String alamat = txt_telepon.getText();
             String kelas = cmb_kelas.getSelectedItem().toString();
             
-            if(siswaController.isNISNExist(nisn)) {
-                throw new Exception("NISN " + nisn + " telah terdaftar");
+            boolean isEdit = siswaController.isNISNExist(nisn);
+            boolean berhasil = false;
+            
+            if(isEdit) {
+                 berhasil = siswaController.edit(nisn, nama, kelas, alamat, telepon);
+            } else {
+                 berhasil = siswaController.tambah(nisn, nama, kelas, alamat, telepon);
             }
 
-            boolean berhasil = siswaController.tambah(nisn, nama, kelas, alamat, telepon);
+            
             
             if(!berhasil) {
                throw new Exception("Gagal menyimpan data");
