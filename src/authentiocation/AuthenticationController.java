@@ -59,7 +59,7 @@ public final class AuthenticationController extends Koneksi {
         System.out.println("Username " + username + " Password " + password);
          
        if(existUser.next()) {
-           user = new User(existUser.getInt(1), existUser.getString(2), existUser.getString(3));
+           user = serializer(existUser);
            
            save();
            System.out.println("Login Success " + user);
@@ -90,7 +90,7 @@ public final class AuthenticationController extends Koneksi {
                 int id =  currentSession.getInt(2);
                 ResultSet existUser = executeQuery("SELECT * FROM `user` WHERE `id_user` = '" + id + "'");
                 if(existUser.next()) {
-                    user = new User(existUser.getInt(1), existUser.getString(2), existUser.getString(3));
+                    user = serializer(existUser);
                     System.out.println("Succefully Loggin from Cache => " + user);
                 }
             }
@@ -122,7 +122,7 @@ public final class AuthenticationController extends Koneksi {
 
         try {
             while(result.next()) {
-               temp.add(new User(result.getInt(1), result.getString(2), result.getString(3)));
+               temp.add(serializer(result));
             }
         } catch (SQLException ex) {
            Logger.getLogger(AuthenticationController.class.getName()).log(Level.SEVERE, null, ex);
@@ -143,6 +143,20 @@ public final class AuthenticationController extends Koneksi {
         }
     }
     
+    public User detail(int id) {
+
+        ResultSet result = executeQuery("SELECT * FROM `user` WHERE id_user = " + id  );
+
+        try {
+            if (result.next()) {
+                return serializer(result);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AuthenticationController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public boolean edit(
         int id,
         String username,
@@ -161,5 +175,15 @@ public final class AuthenticationController extends Koneksi {
             System.out.println("Edit Exception => " + ex);
             return false;
         }
+    }
+    
+    private User serializer(ResultSet result) {
+       try {
+            return new User(result.getInt(1), result.getString(2), result.getString(3));
+       } catch(SQLException ex) {
+          ex.printStackTrace();
+       }
+       
+       return null;
     }
 }

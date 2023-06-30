@@ -5,18 +5,37 @@
  */
 package pengembalian;
 
+import javax.swing.JFrame;
+import utils.*;
+
 /**
  *
  * @author Farhan Fadila
  */
 public class FormPengembalian extends javax.swing.JFrame {
     private final PengembalianController pengembalianController = new PengembalianController();
+    
+    private DisableEditTableModel model;
+    private final Utils utils = new Utils();
 
     /**
      * Creates new form FormPengembalian
      */
     public FormPengembalian() {
         initComponents();
+        initColumnTabel();
+    }
+    
+    private void initColumnTabel() {
+        model = new DisableEditTableModel();
+        
+        tbl_pengembalian.setModel(model);
+        model.addColumn("No");
+        model.addColumn("ID Pengembalian");
+        model.addColumn("Siswa");
+        model.addColumn("Denda");
+        model.addColumn("Lama Pinjam");
+        model.addColumn("Tanggal Pengembalian");
     }
 
     /**
@@ -30,7 +49,7 @@ public class FormPengembalian extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_pengembalian = new javax.swing.JTable();
         txt_search = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         btn_ok = new javax.swing.JButton();
@@ -40,7 +59,7 @@ public class FormPengembalian extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_pengembalian.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -51,7 +70,12 @@ public class FormPengembalian extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbl_pengembalian.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_pengembalianMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl_pengembalian);
 
         txt_search.setPreferredSize(new java.awt.Dimension(59, 24));
 
@@ -126,48 +150,32 @@ public class FormPengembalian extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btn_okMousePressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    private void tbl_pengembalianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_pengembalianMouseClicked
+       try {
+            int selectedRow = tbl_pengembalian.getSelectedRow();
+        
+            if (selectedRow <= -1) {
+                throw new Exception("Silahkan pilih salah satu data di tabel terlebih dahulu");
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormPengembalian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormPengembalian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormPengembalian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormPengembalian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+            
+            String idPengembalian = model.getValueAt(selectedRow, 1).toString();
+            
+            JFrame frame = new FormDetailPengembalian(idPengembalian);
+            
+            frame.setVisible(true);
+       } catch(Exception ex) {
+           System.out.println(ex);
+       }
+    }//GEN-LAST:event_tbl_pengembalianMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormPengembalian().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_ok;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_pinjam;
+    private javax.swing.JTable tbl_pengembalian;
     private javax.swing.JTextField txt_search;
     // End of variables declaration//GEN-END:variables
 }

@@ -38,6 +38,20 @@ public class PengembalianController extends Koneksi {
         return temp;
     }
     
+    public Pengembalian detail(String idPengembalian) {
+
+        ResultSet result = executeQuery("SELECT * FROM `pengembalian` WHERE id_pengembalian = '" + idPengembalian + "'" );
+
+        try {
+            if (result.next()) {
+                return pengembalian(result);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PengembalianController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public List<Pengembalian> search(String query) {
        List<Pengembalian> temp = new ArrayList<>();
        
