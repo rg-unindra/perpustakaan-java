@@ -26,7 +26,7 @@ public class PeminjamanController extends Koneksi {
    public List<Peminjaman> data() {
         List<Peminjaman> temp = new ArrayList<>();
 
-        ResultSet result = executeQuery("SELECT * FROM `peminjaman` ORDER BY `tanggal_pinjam` ASC");
+        ResultSet result = executeQuery("SELECT * FROM `peminjaman` WHERE `status` = 'SDP' ORDER BY `tanggal_pinjam` DESC");
 
         try {
             while (result.next()) {
@@ -45,10 +45,10 @@ public class PeminjamanController extends Koneksi {
         String jumlah, 
         String nisn,
         int idAdminPinjam,
-        long tanggalPinjam
+        String tanggalPinjam
    ) {
      try {
-        Object[] object = {idPeminjaman, idBuku , jumlah, nisn, idAdminPinjam, tanggalPinjam};
+        Object[] object = {idPeminjaman, idBuku , jumlah, nisn, idAdminPinjam, "SDP", tanggalPinjam};
     
         String query = "INSERT INTO `peminjaman` ("
                 + "id_peminjaman, "
@@ -56,6 +56,7 @@ public class PeminjamanController extends Koneksi {
                 + "jumlah, "
                 + "nisn, "
                 + "id_admin_pinjam, "
+                + "status, "
                 + "tanggal_pinjam"
                 + ") VALUES " + objectToString(object);
       
@@ -67,7 +68,60 @@ public class PeminjamanController extends Koneksi {
         return false;
      }
    }
+   
+    public boolean ubahStatusToSDK(
+            String idPeminjaman
+    ) {
+        try {
+            String updateQuery = "UPDATE peminjaman SET " +
+                                "status = 'SDK' " +
+                                "WHERE id_peminjaman = '" + idPeminjaman + "'";
 
+            executeQuery2(updateQuery);
+
+            return true;
+        } catch (Exception ex) {
+            System.out.println("Ubah status Exception => " + ex);
+            return false;
+        }
+    }
+   
+   
+   public Peminjaman detail(String idPeminjaman) {
+
+        ResultSet result = executeQuery("SELECT * FROM `peminjaman` WHERE id_peminjaman = '" + idPeminjaman + "'" );
+
+        try {
+            if (result.next()) {
+                return peminjaman(result);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+   public List<Peminjaman> search(String query) {
+       List<Peminjaman> temp = new ArrayList<>();
+       
+       
+        String searchQuery = "SELECT * FROM `peminjaman`"
+                + "WHERE `id_peminjaman` LIKE '%" + query + "%'";
+        
+     
+
+        ResultSet result = executeQuery(searchQuery);
+
+        try {
+            while (result.next()) {
+                temp.add(peminjaman(result));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return temp;
+    }
    
 
     public boolean hapus(String idPeminjaman) {
@@ -89,7 +143,7 @@ public class PeminjamanController extends Koneksi {
             return new Peminjaman(
                     result.getString(1), result.getString(2), result.getString(3), result.getString(4), 
                     result.getInt(5), 
-                    result.getLong(6));
+                    result.getString(6), result.getString(7));
        } catch(SQLException ex) {
           ex.printStackTrace();
        }

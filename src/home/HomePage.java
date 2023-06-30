@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import buku.FormBuku;
 import siswa.FormSiswa;
 import peminjaman.FormPinjam;
+import pengembalian.FormPengembalian;
 
 /**
  *
@@ -35,6 +36,9 @@ public class HomePage extends javax.swing.JFrame {
                 break;
             case "siswa":
                 frame = new FormSiswa();
+                break;
+            case "pengembalian":
+                frame = new FormPengembalian();
                 break;
             default:
                 frame = new FormPinjam();
@@ -223,7 +227,7 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_ic_bukuMousePressed
 
     private void ic_pengembalianMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ic_pengembalianMousePressed
-        // TODO add your handling code here:
+        navigasi("pengembalian");
     }//GEN-LAST:event_ic_pengembalianMousePressed
 
 

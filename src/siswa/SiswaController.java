@@ -28,7 +28,7 @@ public class SiswaController extends Koneksi {
          List<Siswa> temp = new ArrayList<>();
 
 
-        ResultSet result = executeQuery("SELECT * FROM `siswa` ORDER BY `nama_siswa` ASC");
+        ResultSet result = executeQuery("SELECT * FROM `siswa` GROUP BY `kelas` ORDER BY `kelas` ASC, `nama_siswa` ASC");
 
         try {
             while(result.next()) {
@@ -103,7 +103,7 @@ public class SiswaController extends Koneksi {
     public List<Siswa> search(String query) {
        List<Siswa> temp = new ArrayList<>();
 
-        ResultSet result = executeQuery("SELECT * FROM `siswa` WHERE CONCAT(id_siswa, nisn, nama_siswa, telepon) LIKE '%" + query + "%' ORDER BY `judul` ASC");
+        ResultSet result = executeQuery("SELECT * FROM `siswa` WHERE CONCAT(nisn, nama_siswa, kelas, alamat, telepon) LIKE '%" + query + "%' ORDER BY `nama_siswa` ASC");
 
         try {
             while (result.next()) {

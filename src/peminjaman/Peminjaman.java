@@ -15,7 +15,8 @@ public class Peminjaman {
     public String jumlah;
     public String nisn;
     public int idAdminPinjam;
-    public long tanggalPinjam;
+    public String status;
+    public String tanggalPinjam;
 
     public Peminjaman(
          String idPeminjaman,
@@ -23,19 +24,16 @@ public class Peminjaman {
          String jumlah,
          String nisn,
          int idAdminPinjam,
-         long tanggalPinjam
+         String status,
+         String tanggalPinjam
     ) {
         this.idPeminjaman = idPeminjaman;
         this.idBuku = idBuku;
         this.jumlah = jumlah;
         this.nisn = nisn;
         this.idAdminPinjam = idAdminPinjam;
+        this.status = status;
         this.tanggalPinjam = tanggalPinjam;
-    }
-
-    @Override
-    public String toString() {
-        return "";
     }
 }
 

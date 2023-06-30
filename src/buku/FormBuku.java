@@ -42,10 +42,10 @@ public class FormBuku extends javax.swing.JFrame {
         model = new DefaultTableModel ();
         
         tbl_buku.setModel(model);
+        model.addColumn("No");
         model.addColumn("ID");
         model.addColumn("Judul");
         model.addColumn("Pengarang");
-        model.addColumn("Penerbit");
     }
         
     private void initRowTabel() {
@@ -58,9 +58,10 @@ public class FormBuku extends javax.swing.JFrame {
             for(int i = 0; i < data.size(); i++) {
                Object[] obj = new Object[4];
                Buku item = data.get(i);
-               obj[0] = item.idBuku;
-               obj[1] = item.judul;
-               obj[2] = item.tahun;
+               obj[0] = i + 1;
+               obj[1] = item.idBuku;
+               obj[2] = item.judul;
+               obj[3] = item.pengarang;
                model.addRow(obj); 
             } 
            
@@ -101,10 +102,10 @@ public class FormBuku extends javax.swing.JFrame {
             for(int i = 0; i < data.size(); i++) {
                Object[] obj = new Object[4];
                Buku item = data.get(i);
-               obj[0] = item.idBuku;
-               obj[1] = item.judul;
-               obj[2] = item.pengarang;
-               obj[3] = item.penerbit;
+               obj[0] = i + 1;
+               obj[1] = item.idBuku;
+               obj[2] = item.judul;
+               obj[3] = item.pengarang;
                model.addRow(obj); 
             } 
         } catch(Exception ex) {
@@ -461,7 +462,7 @@ public class FormBuku extends javax.swing.JFrame {
         try {
             int index =  tbl_buku.getSelectedRow();
             TableModel mdl = tbl_buku.getModel();
-            String idBuku = mdl.getValueAt(index, 0).toString();
+            String idBuku = mdl.getValueAt(index, 1).toString();
             Buku item =  bukuController.detail(idBuku);
             
 

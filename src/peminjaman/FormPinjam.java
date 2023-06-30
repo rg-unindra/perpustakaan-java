@@ -5,9 +5,17 @@
  */
 package peminjaman;
 
+import authentiocation.AuthenticationController;
+import authentiocation.User;
+import buku.Buku;
+import buku.BukuController;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableModel;
+import pengembalian.PengembalianController;
 import siswa.*;
 import utils.*;
 
@@ -16,7 +24,10 @@ import utils.*;
  * @author Farhan Fadila
  */
 public class FormPinjam extends javax.swing.JFrame {
+    private final AuthenticationController authenticationController = new AuthenticationController();
     private final PeminjamanController peminjamanController = new PeminjamanController();
+    private final PengembalianController pengembalianController = new PengembalianController();
+    private final BukuController bukuController = new BukuController();
     private final SiswaController siswaController = new SiswaController();
     
     private DisableEditTableModel model;
@@ -26,10 +37,10 @@ public class FormPinjam extends javax.swing.JFrame {
      */
     public FormPinjam() {
         initComponents();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);   
         initColumnTabel();
         initRowTabel();
-        tbl_peminjaman.isCellEditable(ERROR, NORMAL);
+        listenSearch();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);   
     }
     
     private void initColumnTabel() {
@@ -45,12 +56,52 @@ public class FormPinjam extends javax.swing.JFrame {
     }
     
     private void initRowTabel() {
-        model.getDataVector().removeAllElements();
-        model.fireTableDataChanged();
         try {
             List<Peminjaman> data = peminjamanController.data();
 
 
+            fillRow(data);
+        } catch(Exception ex) {
+            System.out.println("initRowTabel ERROR" + ex);
+        }
+    }
+    
+    private void listenSearch() {
+        txt_search.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+               onSearch();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                onSearch();
+            }
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
+    }
+    
+    private void onSearch() {
+        try {
+            String query = txt_search.getText();
+            
+            if(query.isEmpty()) {
+                initRowTabel();
+                return;
+            }
+           
+            List<Peminjaman> data = peminjamanController.search(query);
+            
+            fillRow(data);
+        } catch(Exception ex) {
+            System.out.println("onSearch ex" + ex);
+        }
+    }
+    
+    
+    private void fillRow(List<Peminjaman> data) {
+        try {
+            model.getDataVector().removeAllElements();
+            model.fireTableDataChanged();
+            
             for(int i = 0; i < data.size(); i++) {
                Object[] obj = new Object[6];
                Peminjaman item = data.get(i);
@@ -58,14 +109,24 @@ public class FormPinjam extends javax.swing.JFrame {
                obj[0] = i + 1;
                obj[1] = item.idPeminjaman;
                obj[2] = siswa.namaSiswa + " " + siswa.kelas; 
-               obj[3] = item.idBuku; 
                obj[4] = item.jumlah;
-               obj[5] = utils.dMY(utils.toDate(item.tanggalPinjam));
+               obj[5] = item.tanggalPinjam;
+               
+               String[] idBuku = item.idBuku.split(",");
+               String[] judulBuku = new String[100];
+               
+               for(int y = 0; y < idBuku.length; y++) {
+                   Buku buku = bukuController.detail(idBuku[y]);
+                   judulBuku[y] = buku.judul; 
+               }
+               
+               obj[3] = utils.convertArray2String(judulBuku);
+               
+               
                model.addRow(obj); 
             } 
-
         } catch(Exception ex) {
-            System.out.println("initRowTabel ERROR" + ex);
+            System.out.println("fillRow ex" + ex);
         }
     }
     
@@ -86,7 +147,7 @@ public class FormPinjam extends javax.swing.JFrame {
         btn_tambah = new javax.swing.JButton();
         btn_hapus = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_search = new javax.swing.JTextField();
         lbl_pinjam = new javax.swing.JLabel();
         lbl_refresh = new javax.swing.JLabel();
         btn_pengembalian = new javax.swing.JButton();
@@ -193,22 +254,19 @@ public class FormPinjam extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(44, 44, 44))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(lbl_pinjam)
-                        .addGap(563, 563, 563)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbl_refresh)))
-                .addGap(44, 44, 44))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_pinjam)
+                                .addGap(555, 555, 555)
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_search, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 864, Short.MAX_VALUE)
+                                .addComponent(lbl_refresh))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(44, 44, 44))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +276,7 @@ public class FormPinjam extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_pinjam))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -280,7 +338,52 @@ public class FormPinjam extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_pengembalianMouseClicked
 
     private void btn_pengembalianMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_pengembalianMousePressed
-        // TODO add your handling code here:
+       try {
+          
+            int selectedRow = tbl_peminjaman.getSelectedRow();
+        
+            if (selectedRow <= -1) {
+                throw new Exception("Silahkan pilih salah satu data di tabel terlebih dahulu");
+            }
+            
+            String idPeminjaman = model.getValueAt(selectedRow, 1).toString();
+            Peminjaman peminjaman = peminjamanController.detail(idPeminjaman);
+            
+            if (peminjaman == null) {
+                throw new Exception("Data peminjaman dari id = " + idPeminjaman + " tidak ditemukan" );
+            }
+            User user = authenticationController.currentSession();
+            Date startDate = utils.stringToDate(peminjaman.tanggalPinjam);
+            Date endDate = utils.dateTimeNow();
+            
+   
+            
+            String nisn = peminjaman.nisn;
+            int idAdminPengembalian =  user.id;
+            int lamaPinjam = utils.diffrenceInDays(startDate, endDate);
+            long denda = utils.calculateFine(lamaPinjam);
+            String tanggalPengembalian = utils.dMY(endDate);
+            
+            String idPengembalian = utils.generateRandomBarcode(10);
+            
+            while(pengembalianController.isIDExist(idPengembalian)) {
+                idPengembalian = utils.generateRandomBarcode(10);
+            }
+            
+             boolean berhasil = false;
+            
+             berhasil = peminjamanController.ubahStatusToSDK(idPeminjaman);
+            
+             berhasil = pengembalianController.kembali(idPengembalian, idPeminjaman, nisn, idAdminPengembalian, denda, lamaPinjam, tanggalPengembalian);
+            
+            if (!berhasil) {
+                throw new Exception("Gagal menyimpan data");
+            }
+            
+            initRowTabel();
+       } catch (Exception ex) {
+           utils.errorDialog(this, ex.getMessage());
+       }
     }//GEN-LAST:event_btn_pengembalianMousePressed
 
     private void btn_pengembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pengembalianActionPerformed
@@ -296,9 +399,9 @@ public class FormPinjam extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbl_pinjam;
     private javax.swing.JLabel lbl_refresh;
     private javax.swing.JTable tbl_peminjaman;
+    private javax.swing.JTextField txt_search;
     // End of variables declaration//GEN-END:variables
 }

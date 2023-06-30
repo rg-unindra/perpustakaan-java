@@ -14,7 +14,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRParameter;
@@ -45,17 +47,50 @@ public class Utils {
         return new Date(epochTime);
     }
     
+    
+    public Date dateTimeNow () {
+        return new Date();
+    }
+    
     public long epochTimeNow() {
         return Instant.now().toEpochMilli();
     }
+    
     
     public long toEpoch(Date date) {
         return date.toInstant().toEpochMilli();
     }
     
     public String dMY(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         return format.format(date);
+    }
+    
+    public Date stringToDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(dateString, formatter);
+        
+        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        
+        return date;
+    }
+    
+    public int diffrenceInDays(Date startDate, Date endDate) {
+       long diffInMilliseconds = endDate.getTime() - startDate.getTime();
+       
+       long daysDiff = TimeUnit.MILLISECONDS.toDays(diffInMilliseconds);
+       
+       return (int) daysDiff;
+    }
+    
+    public long calculateFine(int days) {
+        if(days > 31) {
+            return 100000;
+        } else if (days >= 21) {
+            return 50000;
+        } else {
+            return 0;
+        }
     }
 
 //    Ini buat dapet hari pertama bulan dari date di property

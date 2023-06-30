@@ -6,10 +6,12 @@
 package siswa;
 
 
-import java.util.Calendar;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import utils.Utils;
@@ -20,7 +22,7 @@ import utils.Utils;
  */
 public class FormSiswa extends javax.swing.JFrame {
     private DefaultTableModel model;
-    final SiswaController controller = new SiswaController();
+    final SiswaController siswaController = new SiswaController();
     private final Utils utils = new Utils();
      
     /**
@@ -31,6 +33,8 @@ public class FormSiswa extends javax.swing.JFrame {
         initColumnTabel();
         initRowTabel();
         initComboBoxKelas();
+        listenSearch();
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
     }
     
      private void initColumnTabel() {
@@ -48,7 +52,7 @@ public class FormSiswa extends javax.swing.JFrame {
        model.getDataVector().removeAllElements();
        model.fireTableDataChanged();
        try {
-            List<Siswa> data = controller.data();
+            List<Siswa> data = siswaController.data();
             
             
             for(int i = 0; i < data.size(); i++) {
@@ -82,6 +86,50 @@ public class FormSiswa extends javax.swing.JFrame {
         }
         
         cmb_kelas.setModel(model);
+    }
+    
+     private void listenSearch() {
+        txt_search.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+               onSearch();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                onSearch();
+            }
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
+    }
+    
+    private void onSearch() {
+        try {
+            String query = txt_search.getText();
+            
+            if(query.isEmpty()) {
+                initRowTabel();
+                return;
+            }
+            
+            model.getDataVector().removeAllElements();
+            model.fireTableDataChanged();
+            
+           
+            List<Siswa> data = siswaController.search(query);
+            
+            for(int i = 0; i < data.size(); i++) {
+               Object[] obj = new Object[4];
+               Siswa item = data.get(i);
+               obj[0] = i + 1;
+               obj[1] = item.nisn;
+               obj[2] = item.namaSiswa;
+               obj[3] = item.kelas;
+               obj[3] = item.telepon;
+               
+               model.addRow(obj); 
+            } 
+        } catch(Exception ex) {
+            System.out.println("onSearch ex" + ex);
+        }
     }
     
     private void resetForm() {
@@ -200,7 +248,7 @@ public class FormSiswa extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addGap(79, 79, 79)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,35 +261,35 @@ public class FormSiswa extends javax.swing.JFrame {
                                 .addGap(1, 1, 1)
                                 .addComponent(jLabel6)))
                         .addGap(54, 54, 54)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_nisn, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_telepon, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmb_kelas, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(94, 94, 94)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_telepon)
+                            .addComponent(cmb_kelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_nama)
+                            .addComponent(txt_nisn)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                                .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2))
-                        .addGap(60, 60, 60))
+                                .addGap(28, 28, 28)
+                                .addComponent(txt_search))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(jLabel3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 780, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(61, 61, 61))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(131, 131, 131)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(76, 76, 76)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -273,19 +321,16 @@ public class FormSiswa extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE))
-                .addGap(28, 28, 28))
+                            .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,12 +351,17 @@ public class FormSiswa extends javax.swing.JFrame {
 
            
 
+            boolean berhasil = siswaController.tambah(nisn, nama, kelas, alamat, telepon);
+            
+            if(!berhasil) {
+               throw new Exception("Gagal menyimpan data");
+            }
+            
             utils.successDialog(this, "Data berhasil disimpan!");
-
             initRowTabel();
             resetForm();
         } catch(Exception ex) {
-            utils.errorDialog(this, "Maaf gagal menyimpan data, error: " + ex);
+            utils.errorDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_btn_simpanMousePressed
 
@@ -319,12 +369,12 @@ public class FormSiswa extends javax.swing.JFrame {
         try {
             String nisn = txt_nisn.getText();
 
-            Siswa item = controller.detail(nisn);
+            Siswa item = siswaController.detail(nisn);
 
             int dialogResult = utils.errorDialog(this, "Kamu yakin ingin menghapus data " + item.namaSiswa + "?");
 
             if(dialogResult == JOptionPane.YES_OPTION) {
-                controller.hapus(nisn);
+                siswaController.hapus(nisn);
                 resetForm();
                 initRowTabel();
             }
@@ -344,7 +394,7 @@ public class FormSiswa extends javax.swing.JFrame {
             int index =  tbl_siswa.getSelectedRow();
             TableModel mdl = tbl_siswa.getModel();
             String nisn = mdl.getValueAt(index, 0).toString();
-            Siswa item = controller.detail(nisn);
+            Siswa item = siswaController.detail(nisn);
             
             
          
@@ -357,7 +407,7 @@ public class FormSiswa extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_siswaMouseClicked
 
     private void btn_laporanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMousePressed
-       utils.bukaLaporan("laporan_siswa", controller.con);
+       utils.bukaLaporan("laporan_siswa", siswaController.con);
     }//GEN-LAST:event_btn_laporanMousePressed
 
     /**

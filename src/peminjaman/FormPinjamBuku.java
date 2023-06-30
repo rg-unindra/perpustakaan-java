@@ -8,8 +8,8 @@ package peminjaman;
 import authentiocation.*;
 import buku.*;
 import java.awt.event.KeyEvent;
-import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -171,10 +171,10 @@ public class FormPinjamBuku extends javax.swing.JFrame {
                 jumlah[i] = String.valueOf(item.count);
             }
             
-            String idPeminjaman = utils.generateRandomBarcode(20);
+            String idPeminjaman = utils.generateRandomBarcode(10);
             
             while(peminjamanController.isIDExist(idPeminjaman)) {
-                idPeminjaman = utils.generateRandomBarcode(20);
+                idPeminjaman = utils.generateRandomBarcode(10);
             }
             
             
@@ -184,8 +184,12 @@ public class FormPinjamBuku extends javax.swing.JFrame {
                     utils.convertArray2String(jumlah), 
                     nisn, 
                     idAdminPeminjaman, 
-                    utils.epochTimeNow()
+                    utils.dMY(new Date())
             );
+            
+            if(!berhasil) {
+                throw new Exception("Gagal menyimpan data");
+            }
             
             dispose();
             
@@ -196,19 +200,7 @@ public class FormPinjamBuku extends javax.swing.JFrame {
     
     }
       
-    private void inspectTable() {
-        // Create a PrintStream object to the console
-        PrintStream console = System.out;
-
-        // Iterate through the rows and columns of the JTable and print the data to the console
-        for (int row = 0; row < tbl_buku.getRowCount(); row++) {
-            for (int column = 0; column < tbl_buku.getColumnCount(); column++) {
-                console.print(tbl_buku.getValueAt(row, column));
-                console.print(" ");
-            }
-            console.println();
-        }
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
