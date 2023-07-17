@@ -87,7 +87,7 @@ public class BukuController extends Koneksi {
 
             return true;
         } catch (Exception ex) {
-            System.out.println("Tambah Exception => " + ex);
+            System.out.println("Edit Exception => " + ex);
             return false;
         }
     }
@@ -134,6 +134,40 @@ public class BukuController extends Koneksi {
     
     public boolean isBookExist(String idBuku) {
            return isIDExist("buku", "id_buku", idBuku);
+    }
+    
+    public int remainingStock(String idBuku) {
+            int stock = 0;
+            
+             ResultSet result = executeQuery("SELECT jumlah FROM `buku`  WHERE `id_buku` = '" + idBuku + "'");
+
+            try {
+                while (result.next()) {
+                    stock = result.getInt(1);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BukuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            return stock;
+    }
+    
+    public boolean  editStok(
+        String idBuku,
+        int jumlah
+    ) {
+        try {
+            String updateQuery = "UPDATE buku SET " +
+                                "jumlah = " + jumlah + " " +
+                                "WHERE id_buku = '" + idBuku + "'";
+
+            executeQuery2(updateQuery);
+
+            return true;
+        } catch (Exception ex) {
+            System.out.println("Edit stok Exception => " + ex);
+            return false;
+        }
     }
     
     private Buku buku(ResultSet result) {

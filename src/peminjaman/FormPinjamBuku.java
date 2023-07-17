@@ -60,6 +60,13 @@ public class FormPinjamBuku extends javax.swing.JFrame {
             CheckoutItem item = checkoutItems.get(i);
             if(item.buku.idBuku.equals(itemId)) {
                CheckoutItem updatedItem = item;
+               int stok = bukuController.remainingStock(updatedItem.buku.idBuku);
+                int editedStok = item.count + 1;
+
+               if(editedStok > stok ) {
+                   utils.errorDialog(frame, "Jumlah stok tidak mencukupi");
+                   return;
+               }
                updatedItem.setCount(item.count + 1);
                checkoutItems.remove(item);
                checkoutItems.add(updatedItem);
@@ -131,10 +138,17 @@ public class FormPinjamBuku extends javax.swing.JFrame {
                             
                         } else {
                             if(row <= checkoutItems.size() - 1) {
-                               CheckoutItem updatedItem = checkoutItems.get(row);
-                                updatedItem.setCount(Integer.parseInt(data.toString()));
-                                checkoutItems.remove(row);
-                                checkoutItems.add(updatedItem);
+                                 CheckoutItem updatedItem = checkoutItems.get(row);
+                                 int stok = updatedItem.buku.jumlah;
+                                 int editedStok = Integer.parseInt(data.toString());
+                                 
+                                if(editedStok > stok ) {
+                                    utils.errorDialog(frame, "Jumlah stok tidak mencukupi");
+                                    return;
+                                }
+                               updatedItem.setCount(Integer.parseInt(data.toString()));
+                               checkoutItems.remove(row);
+                               checkoutItems.add(updatedItem);
                             }
                         }
                         
@@ -191,6 +205,11 @@ public class FormPinjamBuku extends javax.swing.JFrame {
                 throw new Exception("Gagal menyimpan data");
             }
             
+             for(int i = 0; i < checkoutItems.size(); i++) {
+                CheckoutItem item = checkoutItems.get(i);
+                updateStockBuku(item.buku.idBuku, item.buku.jumlah - item.count, 0);
+            }
+            
             dispose();
             
         } catch(Exception ex) {
@@ -198,6 +217,18 @@ public class FormPinjamBuku extends javax.swing.JFrame {
             utils.errorDialog(this, ex.getMessage());
         }
     
+    }
+    
+    private void updateStockBuku(String idBuku, int stock, int n) {
+        try {
+           if(n > 10) {
+               utils.errorDialog(this, "Gagal mengupdate jumlah buku");
+               return;
+           }
+           bukuController.editStok(idBuku, stock);
+        } catch(Exception ex) {
+            updateStockBuku(idBuku, stock, n++);
+        }
     }
       
    

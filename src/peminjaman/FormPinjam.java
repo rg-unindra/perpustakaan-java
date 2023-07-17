@@ -130,6 +130,19 @@ public class FormPinjam extends javax.swing.JFrame {
         }
     }
     
+        
+    private void updateStockBuku(String idBuku, int stock, int n) {
+        try {
+           if(n > 10) {
+               utils.errorDialog(this, "Gagal mengupdate jumlah buku");
+               return;
+           }
+           bukuController.editStok(idBuku, stock);
+        } catch(Exception ex) {
+            updateStockBuku(idBuku, stock, n++);
+        }
+    }
+    
     
 
     /**
@@ -392,6 +405,16 @@ public class FormPinjam extends javax.swing.JFrame {
             JFrame frame = new FormDetailPengembalian(idPengembalian);
             
             frame.setVisible(true);
+            
+           
+            
+            String[] idBuku = peminjaman.idBuku.split(",");
+            String[] jumlahBuku = peminjaman.jumlah.split(",");
+                    
+            for(int i = 0; i < idBuku.length; i++) {
+                Buku buku = bukuController.detail(idBuku[i]);
+                bukuController.editStok(buku.idBuku, Integer.parseInt(jumlahBuku[i]) + buku.jumlah);
+            }
             
             initRowTabel();
        } catch (Exception ex) {
