@@ -3,16 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Project/library_app/src/laporan/laporan_pengembalian.jrxml</file>
-            <file>file:/D:/Project/library_app/src/siswa/FormSiswa.java</file>
-            <file>file:/D:/Project/library_app/src/laporan/laporan_buku.jrxml</file>
-            <file>file:/D:/Project/library_app/src/home/HomePage.java</file>
-            <file>file:/D:/Project/library_app/src/peminjaman/FormPinjam.java</file>
-            <file>file:/D:/Project/library_app/src/siswa/Siswa.java</file>
-            <file>file:/D:/Project/library_app/src/siswa/SiswaController.java</file>
-            <file>file:/D:/Project/library_app/src/utils/Utils.java</file>
-            <file>file:/D:/Project/library_app/src/laporan/laporan_peminjaman.jrxml</file>
-            <file>file:/D:/Project/library_app/src/laporan/laporan_siswa.jrxml</file>
+            <file>file:/D:/Project/library_app/src/buku/FormBuku.java</file>
+            <file>file:/D:/Project/library_app/src/peminjaman/FormPinjamBuku.java</file>
+            <file>file:/D:/Project/library_app/src/buku/BukuController.java</file>
         </group>
     </open-files>
 </project-private>

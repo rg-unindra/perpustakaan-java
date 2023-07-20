@@ -11,9 +11,12 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import siswa.*;
 import utils.Utils;
 
@@ -32,6 +35,7 @@ public class FormPinjamBuku extends javax.swing.JFrame {
     
     private final List<CheckoutItem> checkoutItems = new ArrayList<>();
     private DefaultTableModel model;
+    private DefaultTableModel cariBukuModel;
     
     javax.swing.JFrame frame = this;
     
@@ -44,10 +48,12 @@ public class FormPinjamBuku extends javax.swing.JFrame {
     ) {
         initComponents();
         this.nisn = nisn;
-        txt_barcode.requestFocus();
+        txt_search.requestFocus();
         getDetailSiswa();
         initColumnTabel();
+        initRowTabelCariBuku();
         listenUserEditTable();
+        listenSearch();
     }
     
     
@@ -92,12 +98,18 @@ public class FormPinjamBuku extends javax.swing.JFrame {
     
      private void initColumnTabel() {
         model = new DefaultTableModel ();
+        cariBukuModel = new DefaultTableModel ();
         
         tbl_buku.setModel(model);
         model.addColumn("No");
         model.addColumn("ID Buku");
         model.addColumn("Judul");
         model.addColumn("Jumlah");
+        
+        tbl_cari_buku.setModel(cariBukuModel);
+        cariBukuModel.addColumn("No");
+        cariBukuModel.addColumn("ID Buku");
+        cariBukuModel.addColumn("Judul");
     }
      
     private void initRowTabel() {
@@ -119,6 +131,68 @@ public class FormPinjamBuku extends javax.swing.JFrame {
        } catch(Exception ex) {
            System.out.println(checkoutItems.size());
        }
+    }
+    
+    private void initRowTabelCariBuku() {
+         try {
+           
+           cariBukuModel.getDataVector().removeAllElements();
+           cariBukuModel.fireTableDataChanged(); 
+           
+           List<Buku> data = bukuController.data();
+           
+            for(int i = 0; i < data.size(); i++) {
+                   Buku item = data.get(i);
+                   Object[] obj = new Object[3];
+                   obj[0] = i + 1;
+                   obj[1] = item.idBuku;
+                   obj[2] = item.judul;
+                   cariBukuModel.addRow(obj); 
+           }
+       } catch(Exception ex) {
+           System.out.println(checkoutItems.size());
+       }
+    }
+    
+    private void listenSearch() {
+        txt_search.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) {
+               onSearch();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                onSearch();
+            }
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
+    }
+    
+     private void onSearch() {
+        try {
+            String query = txt_search.getText();
+            
+            if(query.isEmpty()) {
+                initRowTabel();
+                return;
+            }
+            
+            cariBukuModel.getDataVector().removeAllElements();
+            cariBukuModel.fireTableDataChanged();
+            
+           
+            List<Buku> data = bukuController.search(query);
+            
+            for(int i = 0; i < data.size(); i++) {
+               Object[] obj = new Object[3];
+               Buku item = data.get(i);
+               obj[0] = i + 1;
+               obj[1] = item.idBuku;
+               obj[2] = item.judul;
+               cariBukuModel.addRow(obj); 
+            } 
+        } catch(Exception ex) {
+            System.out.println("onSearch ex" + ex);
+        }
     }
     
     private void listenUserEditTable() {
@@ -169,7 +243,7 @@ public class FormPinjamBuku extends javax.swing.JFrame {
     private void save() {
         try {
             if(checkoutItems.isEmpty()) {
-                txt_barcode.setFocusable(true);
+                txt_search.setFocusable(true);
                 throw new Exception("Buku masih kosong, silahkan pilih beberapa buku terlebih dahulu");
             }
             
@@ -249,8 +323,10 @@ public class FormPinjamBuku extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_buku = new javax.swing.JTable();
         btn_simpan = new javax.swing.JButton();
-        txt_barcode = new javax.swing.JTextField();
+        txt_search = new javax.swing.JTextField();
         btn_clear = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl_cari_buku = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -323,9 +399,9 @@ public class FormPinjamBuku extends javax.swing.JFrame {
             }
         });
 
-        txt_barcode.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_search.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_barcodeKeyPressed(evt);
+                txt_searchKeyPressed(evt);
             }
         });
 
@@ -348,6 +424,34 @@ public class FormPinjamBuku extends javax.swing.JFrame {
             }
         });
 
+        tbl_cari_buku.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbl_cari_buku.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tbl_cari_bukuFocusLost(evt);
+            }
+        });
+        tbl_cari_buku.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_cari_bukuMouseClicked(evt);
+            }
+        });
+        tbl_cari_buku.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbl_cari_bukuKeyPressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tbl_cari_buku);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -356,19 +460,26 @@ public class FormPinjamBuku extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txt_barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
+                        .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(lbl_description)
-                            .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(42, 42, 42))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(lbl_description))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(42, 42, 42))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,15 +490,17 @@ public class FormPinjamBuku extends javax.swing.JFrame {
                 .addComponent(lbl_description)
                 .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txt_barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addComponent(btn_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -436,14 +549,14 @@ public class FormPinjamBuku extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_simpanActionPerformed
 
-    private void txt_barcodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_barcodeKeyPressed
-        String barcode = txt_barcode.getText();
+    private void txt_searchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyPressed
+        String barcode = txt_search.getText();
         
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
             updateItem(barcode.trim());
-            txt_barcode.setText("");
+            txt_search.setText("");
         }
-    }//GEN-LAST:event_txt_barcodeKeyPressed
+    }//GEN-LAST:event_txt_searchKeyPressed
 
     private void tbl_bukuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbl_bukuKeyPressed
        System.out.println("Here tbl_bukuKeyPressed");
@@ -465,6 +578,27 @@ public class FormPinjamBuku extends javax.swing.JFrame {
   
     }//GEN-LAST:event_tbl_bukuFocusLost
 
+    private void tbl_cari_bukuFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tbl_cari_bukuFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbl_cari_bukuFocusLost
+
+    private void tbl_cari_bukuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbl_cari_bukuKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbl_cari_bukuKeyPressed
+
+    private void tbl_cari_bukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_cari_bukuMouseClicked
+       try {
+           int index =  tbl_cari_buku.getSelectedRow();
+           TableModel mdl = tbl_cari_buku.getModel();
+           String idBuku = mdl.getValueAt(index, 1).toString();
+           Buku item =  bukuController.detail(idBuku);
+           
+           updateItem(item.idBuku);
+       } catch(Exception ex) {
+       
+       }
+    }//GEN-LAST:event_tbl_cari_bukuMouseClicked
+
    
    
 
@@ -475,8 +609,10 @@ public class FormPinjamBuku extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_description;
     private javax.swing.JTable tbl_buku;
-    private javax.swing.JTextField txt_barcode;
+    private javax.swing.JTable tbl_cari_buku;
+    private javax.swing.JTextField txt_search;
     // End of variables declaration//GEN-END:variables
 }
