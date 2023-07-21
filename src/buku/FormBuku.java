@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -34,7 +33,7 @@ public class FormBuku extends javax.swing.JFrame {
         initRowTabel();
         initComboBoxTahun();
         listenSearch();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);   
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
     }
     
      

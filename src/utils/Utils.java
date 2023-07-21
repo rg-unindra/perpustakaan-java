@@ -121,9 +121,11 @@ public class Utils {
         try {
             Map params = new HashMap();
             params.put(JRParameter.REPORT_LOCALE, locale);
-            String reportDirectory = System.getProperty("user.dir") + "/src/laporan/" + namaFile;
+            String reportFolder = System.getProperty("user.dir") + "/src/laporan/";
+            String reportDirectory = reportFolder + namaFile;
             String reportSource = reportDirectory  + ".jrxml";
             String reportDestination = reportDirectory + ".jasper";
+            params.putIfAbsent("REPORTS_DIR", reportFolder);
 
             JasperReport report = JasperCompileManager.compileReport(reportSource);
             JasperPrint print = JasperFillManager.fillReport(report, params, con);
@@ -135,17 +137,20 @@ public class Utils {
             System.out.println(ex);
         }
     }
+
     
     public void bukaLaporan(String namaFile, Connection con, Map externalParams) {
         try {
             Map params = new HashMap();
             params.put(JRParameter.REPORT_LOCALE, locale);
-            
+           
             params.putAll(externalParams);
             
-            String reportDirectory = System.getProperty("user.dir") + "/src/laporan/" + namaFile;
+            String reportFolder = System.getProperty("user.dir") + "/src/laporan/";
+            String reportDirectory = reportFolder + namaFile;
             String reportSource = reportDirectory  + ".jrxml";
             String reportDestination = reportDirectory + ".jasper";
+            params.putIfAbsent("REPORTS_DIR", reportFolder);
 
             JasperReport report = JasperCompileManager.compileReport(reportSource);
             JasperPrint print = JasperFillManager.fillReport(report, params, con);
