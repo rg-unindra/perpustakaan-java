@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Jun 2023 pada 17.54
+-- Waktu pembuatan: 21 Jul 2023 pada 05.22
 -- Versi server: 10.1.36-MariaDB
 -- Versi PHP: 7.2.11
 
@@ -43,8 +43,24 @@ CREATE TABLE `buku` (
 --
 
 INSERT INTO `buku` (`id_buku`, `judul`, `pengarang`, `penerbit`, `tahun`, `jumlah`, `tanggal_masuk`) VALUES
-('9786230107252', 'Data Mining', 'Muhammad Arhami|Muhammad Nasir', 'Andi', 2020, 3, 1687832376),
-('9789793784922', 'Aljabar dan Kalkulus', 'Ayub Subandi', 'Rekayasa Sains', 2019, 3, 1687832376);
+('2344562738', 'Pendidikan Agama Islam', 'A. Wahid', 'Armiko', 2010, 249, 0),
+('283784819', 'Kewirausahaan', 'Mudie Khalia', 'Armiko', 2010, 250, 0),
+('3948571678', 'Bahasa Inggris', 'Drs. Nanan Suryana', 'Armiko', 2018, 250, 0),
+('9237461819', 'Pendidikan Kewarganegaraan', 'Kokom Komalasari', 'Armiko', 2017, 250, 0),
+('9263745168', 'Penjualan', 'H. Ating.T', 'Armiko', 2016, 89, 0),
+('9273648597', 'TIK', 'Ali Imron', 'Saka Mitra', 2017, 250, 0),
+('9283741627', 'Komputer Akuntansi', 'Ali Imron', 'Armiko', 2010, 100, 0),
+('9283746178', 'Paket Akutansi Biaya', NULL, 'Armiko', 2016, 100, 0),
+('928374859', 'Sistem Kearsipan', 'Dra. Dewi', 'Armiko', 2017, 100, 0),
+('928574637', 'Peralatan Kantor', 'Vida Hasna Farida', 'Armiko', 2010, 100, 0),
+('9384756289', 'Membuka Usaha Retail', 'Dra. Henry Bouty', '', 2018, 90, 0),
+('943327182', 'Penjaskes', 'Yusuf Taufik', '', 2016, 250, 0),
+('9485738192', 'Bahasa Indonesia', 'Dra. Euis Honiatri', 'Armiko', 2016, 250, 0),
+('9584738291', 'Akutansi Seri C', 'Drs. Hendi Somantri', 'Armiko', 2010, 100, 0),
+('9786230107252', 'Data Mining', 'Muhammad Arhami|Muhammad Nasir', 'Andi', 2020, 101, 1687832376),
+('9789793784922', 'Aljabar dan Kalkulus', 'Ayub Subandi', 'Rekayasa Sains', 2019, 98, 1687832376),
+('9824657281', 'Ilmu Pengetahuan Alam', 'Kaila Pasha', 'Armiko', 2007, 250, 0),
+('9834472819', 'Matematika', 'Drs. Maman Abdulrahman', 'Armiko', 2017, 250, 0);
 
 -- --------------------------------------------------------
 
@@ -62,15 +78,6 @@ CREATE TABLE `peminjaman` (
   `tanggal_pinjam` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `peminjaman`
---
-
-INSERT INTO `peminjaman` (`id_peminjaman`, `id_buku`, `jumlah`, `nisn`, `id_admin_pinjam`, `status`, `tanggal_pinjam`) VALUES
-('LNPBQD3JGN', '9789793784922', '1', '201943500487', 1, 'SDK', '30/06/2023'),
-('P6IY5AJ8R22NFWC39RO8', '9789793784922', '1', '201943500487', 1, 'SDK', '28/06/2023'),
-('XF9080JU4Z', '9789793784922,9786230107252', '2,3', '201943500487', 1, 'SDK', '30/06/2023');
-
 -- --------------------------------------------------------
 
 --
@@ -87,15 +94,6 @@ CREATE TABLE `pengembalian` (
   `tanggal_pengembalian` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `pengembalian`
---
-
-INSERT INTO `pengembalian` (`id_pengembalian`, `id_peminjaman`, `nisn`, `id_admin_pengembalian`, `denda`, `lama_pinjam`, `tanggal_pengembalian`) VALUES
-('D8DX76Q37L', 'P6IY5AJ8R22NFWC39RO8', '201943500487', 1, 0, 2, '30/06/2023'),
-('RGIOWUCJ4W', 'XF9080JU4Z', '201943500487', 1, 0, 0, '30/06/2023'),
-('YVLDW2HMSX', 'LNPBQD3JGN', '201943500487', 1, 0, 0, '30/06/2023');
-
 -- --------------------------------------------------------
 
 --
@@ -107,13 +105,6 @@ CREATE TABLE `session` (
   `id_user` int(11) NOT NULL,
   `login_time` bigint(20) NOT NULL COMMENT 'login time in epoch milliseconds time '
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `session`
---
-
-INSERT INTO `session` (`id_session`, `id_user`, `login_time`) VALUES
-(3, 1, 1687864402310);
 
 -- --------------------------------------------------------
 
@@ -154,9 +145,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`) VALUES
-(1, 'admin', 'admin'),
-(2, 'admin2', 'admin'),
-(3, 'admin4', 'admin');
+(1, 'admin', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -175,6 +164,12 @@ ALTER TABLE `peminjaman`
   ADD PRIMARY KEY (`id_peminjaman`);
 
 --
+-- Indeks untuk tabel `pengembalian`
+--
+ALTER TABLE `pengembalian`
+  ADD PRIMARY KEY (`id_pengembalian`);
+
+--
 -- Indeks untuk tabel `session`
 --
 ALTER TABLE `session`
@@ -187,6 +182,12 @@ ALTER TABLE `siswa`
   ADD PRIMARY KEY (`nisn`);
 
 --
+-- Indeks untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -194,7 +195,7 @@ ALTER TABLE `siswa`
 -- AUTO_INCREMENT untuk tabel `session`
 --
 ALTER TABLE `session`
-  MODIFY `id_session` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_session` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

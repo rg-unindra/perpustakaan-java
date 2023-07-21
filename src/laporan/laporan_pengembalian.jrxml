@@ -2,11 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ef1671e8-48ce-4e42-ab75-53cd51c6d2a6">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="24"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="REPORTS_DIR" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT p.id_pengembalian, p.id_peminjaman, s.nisn, s.nama_siswa, p.denda, p.lama_pinjam, p.tanggal_pengembalian
   FROM pengembalian p
@@ -39,10 +40,6 @@
 	</background>
 	<title>
 		<band height="72" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="5" width="66" height="65" uuid="ae5168b4-ba2a-41d5-8054-baa09d1c653a"/>
-				<imageExpression><![CDATA["D:\\Project\\library_app\\src\\assets\\logo.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement style="Title" x="72" y="8" width="276" height="33" uuid="52ef26e4-05c0-4892-a339-323a1ecd781e"/>
 				<textElement verticalAlignment="Middle">
@@ -57,6 +54,10 @@
 				</textElement>
 				<text><![CDATA[Jl. Yon Zikon 14 No. 4, RW. 6, Srengseng Sawah, Kec, Jagakarsa, Kota Jakarta Selatan, DKI Jakarta 12640]]></text>
 			</staticText>
+			<image>
+				<reportElement x="0" y="7" width="66" height="65" uuid="0605b252-a644-463c-bc28-53821db2d2ab"/>
+				<imageExpression><![CDATA[$P{REPORTS_DIR} + "/logo.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
